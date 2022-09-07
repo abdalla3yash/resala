@@ -62,6 +62,7 @@ class LoginScreen extends StatelessWidget {
                         textController: passwordController,
                         hintText: "كلمه السر",
                         icon: Icons.lock,
+                        obsecure: true,
                       ),
                       SizedBox(
                         height: Get.context!.height * 0.02,
@@ -72,19 +73,20 @@ class LoginScreen extends StatelessWidget {
                           alignment: Alignment.centerRight,
                           child: Padding(
                             padding: EdgeInsets.only(
-                              right: Get.context!.height * 0.05,
+                              right: Get.context!.height * 0.04,
                             ),
-                            child: const Text(
+                            child: Text(
                               "هل نسيت كلمه السر؟",
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 14,
+                                color: AppColors.mainRedColor.withOpacity(0.6),
                               ),
                             ),
                           ),
                         ),
                       ),
                       SizedBox(
-                        height: Get.context!.height * 0.05,
+                        height: Get.context!.height * 0.04,
                       ),
                       GestureDetector(
                         onTap: () {
@@ -111,44 +113,48 @@ class LoginScreen extends StatelessWidget {
                       SizedBox(
                         height: Get.context!.height * 0.1,
                       ),
-                      const Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            "نرحب بتواصلكم معنا",
-                            style: TextStyle(fontSize: 18),
-                          )),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "نرحب بتواصلكم معنا",
+                          style: TextStyle(
+                              fontSize: 14, color: Colors.grey.shade600),
+                        ),
+                      ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           Text(
                             "19450",
-                            style: TextStyle(fontSize: 14),
+                            style: TextStyle(
+                                fontSize: 12, color: Colors.grey.shade600),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
-                          Icon(
+                          const Icon(
                             Icons.phone,
-                            size: 16,
+                            size: 14,
                             color: AppColors.mainBlueColor,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
-                          VerticalDivider(),
-                          SizedBox(
+                          const VerticalDivider(),
+                          const SizedBox(
                             width: 5,
                           ),
                           Text(
                             "contact_us@resala.org",
-                            style: TextStyle(fontSize: 14),
+                            style: TextStyle(
+                                fontSize: 12, color: Colors.grey.shade600),
                           ),
                           SizedBox(
                             width: 5,
                           ),
                           Icon(
                             Icons.mail,
-                            size: 16,
+                            size: 14,
                             color: AppColors.mainRedColor,
                           ),
                         ],

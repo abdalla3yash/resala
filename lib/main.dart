@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
       ],
       locale: const Locale('ar', 'AE'),
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         fontFamily: "NotoSansArabic",

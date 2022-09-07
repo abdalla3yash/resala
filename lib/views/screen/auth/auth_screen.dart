@@ -40,7 +40,7 @@ class _AuthScreenState extends State<AuthScreen>
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SizedBox(
-            height: Get.context!.height * 0.05,
+            height: Get.context!.height * 0.08,
           ),
           SizedBox(
             height: Get.context!.height * 0.2,
@@ -55,7 +55,7 @@ class _AuthScreenState extends State<AuthScreen>
           TabBar(
             indicatorColor: AppColors.mainBlueColor,
             labelColor: AppColors.mainRedColor,
-            labelStyle: const TextStyle(fontSize: 22),
+            labelStyle: const TextStyle(fontSize: 18),
             indicatorSize: TabBarIndicatorSize.label,
             controller: _tabController,
             tabs: tabs,
