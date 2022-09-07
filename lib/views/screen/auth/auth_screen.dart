@@ -56,7 +56,7 @@ class _AuthScreenState extends State<AuthScreen>
             indicatorColor: AppColors.mainBlueColor,
             labelColor: AppColors.mainRedColor,
             labelStyle: const TextStyle(fontSize: 22),
-            indicatorSize: TabBarIndicatorSize.tab,
+            indicatorSize: TabBarIndicatorSize.label,
             controller: _tabController,
             tabs: tabs,
           ),

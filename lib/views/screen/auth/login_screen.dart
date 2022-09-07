@@ -59,16 +59,65 @@ class LoginScreen extends StatelessWidget {
                 width: Get.context!.width * 0.9,
                 height: Get.context!.height / 13,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
-                    color: AppColors.mainBlueColor),
-                child: Center(
+                  borderRadius: BorderRadius.circular(25),
+                  color: AppColors.mainBlueColor,
+                ),
+                child: const Center(
                   child: Text(
                     "تسجيل الدخول",
-                    style: TextStyle(color: AppColors.whiteColor, fontSize: 22),
+                    style: TextStyle(
+                      color: AppColors.whiteColor,
+                      fontSize: 22,
+                    ),
                   ),
                 ),
               ),
             ),
+            SizedBox(
+              height: Get.context!.height * 0.1,
+            ),
+            const Align(
+                alignment: Alignment.center,
+                child: Text(
+                  "نرحب بتواصلكم معنا",
+                  style: TextStyle(fontSize: 18),
+                )),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Text(
+                  "19450",
+                  style: TextStyle(fontSize: 14),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Icon(
+                  Icons.phone,
+                  size: 16,
+                  color: AppColors.mainBlueColor,
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                VerticalDivider(),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  "contact_us@resala.org",
+                  style: TextStyle(fontSize: 14),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Icon(
+                  Icons.mail,
+                  size: 16,
+                  color: AppColors.mainRedColor,
+                ),
+              ],
+            )
           ],
         ),
       ),
