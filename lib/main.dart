@@ -3,8 +3,12 @@ import 'package:get/get.dart';
 import 'package:resala/views/screen/auth/auth_screen.dart';
 import 'package:resala/views/screen/auth/login_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'base/dep.dart' as dep;
+import 'model/routes/router.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dep.init();
   runApp(const MyApp());
 }
 
@@ -28,7 +32,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: AuthScreen(),
+      initialRoute: RouteHelper.getAuth(),
+      getPages: RouteHelper.routes,
     );
   }
 }
