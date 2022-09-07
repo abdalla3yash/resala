@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:resala/views/screen/auth/auth_screen.dart';
-import 'package:resala/views/screen/auth/login_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'base/dep.dart' as dep;
 import 'model/routes/router.dart';
@@ -31,6 +29,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: "NotoSansArabic",
       ),
       initialRoute: RouteHelper.getAuth(),
       getPages: RouteHelper.routes,

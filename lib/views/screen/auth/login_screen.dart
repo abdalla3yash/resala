@@ -76,7 +76,9 @@ class LoginScreen extends StatelessWidget {
                             ),
                             child: const Text(
                               "هل نسيت كلمه السر؟",
-                              style: TextStyle(fontSize: 18),
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
                             ),
                           ),
                         ),
