@@ -5,10 +5,18 @@ import 'package:resala/controller/controllers/auth_controller.dart';
 import 'package:resala/views/widget/app_text_field.dart';
 import 'package:resala/views/widget/colors.dart';
 import 'package:resala/views/widget/custom_loader.dart';
+import 'package:resala/views/widget/footer.dart';
+import 'package:resala/views/widget/time_picker.dart';
 
-class RegisterScreen extends StatelessWidget {
+class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen>
+    with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final ValueNotifier<DateTime?> dateSub = ValueNotifier(null);
@@ -18,9 +26,38 @@ class RegisterScreen extends StatelessWidget {
     var phoneController = TextEditingController();
     var usernameController = TextEditingController();
     var nationalIDController = TextEditingController();
-    var dateController = TextEditingController();
     var userTybeIDController = TextEditingController();
     var passwordController = TextEditingController();
+
+    int? selectedIndex;
+    List<String> chipsList = [
+      "مسئول",
+      "متطوع",
+      "مركزي / مدير",
+    ];
+    List<Widget> techChips() {
+      List<Widget> chips = [];
+      for (int i = 0; i < chipsList.length; i++) {
+        Widget item = Padding(
+          padding: const EdgeInsets.only(left: 10, right: 5),
+          child: ChoiceChip(
+            label: Text(chipsList[i].toString()),
+            labelStyle: const TextStyle(color: Colors.white),
+            backgroundColor: AppColors.mainRedColor,
+            selectedColor: AppColors.mainBlueColor,
+            disabledColor: AppColors.whiteColor,
+            selected: selectedIndex == i,
+            onSelected: (bool value) {
+              setState(() {
+                selectedIndex = i;
+              });
+            },
+          ),
+        );
+        chips.add(item);
+      }
+      return chips;
+    }
 
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
@@ -73,48 +110,42 @@ class RegisterScreen extends StatelessWidget {
                       SizedBox(
                         height: Get.context!.height * 0.02,
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: Get.context!.width * 0.05),
-                        child: ValueListenableBuilder<DateTime?>(
-                            valueListenable: dateSub,
-                            builder: (context, dateVal, child) {
-                              return InkWell(
-                                onTap: () async {
-                                  var date = await showDatePicker(
-                                    context: context,
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime(1950),
-                                    lastDate: DateTime(2050),
-                                    currentDate: DateTime.now(),
-                                    initialEntryMode:
-                                        DatePickerEntryMode.calendar,
-                                    initialDatePickerMode: DatePickerMode.day,
-                                    builder: (context, child) {
-                                      return Theme(
-                                        data: Theme.of(context).copyWith(
-                                          colorScheme: ColorScheme.fromSwatch(
-                                            primarySwatch: Colors.red,
-                                            accentColor:
-                                                AppColors.mainBlueColor,
-                                            backgroundColor: Colors.lightBlue,
-                                            cardColor: Colors.white,
-                                          ),
+                      ValueListenableBuilder<DateTime?>(
+                          valueListenable: dateSub,
+                          builder: (context, dateVal, child) {
+                            return InkWell(
+                              onTap: () async {
+                                var date = await showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(1950),
+                                  lastDate: DateTime(2050),
+                                  currentDate: DateTime.now(),
+                                  initialEntryMode:
+                                      DatePickerEntryMode.calendar,
+                                  initialDatePickerMode: DatePickerMode.day,
+                                  builder: (context, child) {
+                                    return Theme(
+                                      data: Theme.of(context).copyWith(
+                                        colorScheme: ColorScheme.fromSwatch(
+                                          primarySwatch: Colors.red,
+                                          accentColor: AppColors.mainBlueColor,
+                                          backgroundColor: Colors.lightBlue,
+                                          cardColor: Colors.white,
                                         ),
-                                        child: child!,
-                                      );
-                                    },
-                                  );
-                                  dateSub.value = date;
-                                },
-                                child: Container(
-                                  child: buildDateTimePicker(
+                                      ),
+                                      child: child!,
+                                    );
+                                  },
+                                );
+                                dateSub.value = date;
+                              },
+                              child: CustomTimePicker(
+                                data:
                                     dateVal != null ? convertDate(dateVal) : '',
-                                  ),
-                                ),
-                              );
-                            }),
-                      ),
+                              ),
+                            );
+                          }),
                       SizedBox(
                         height: Get.context!.height * 0.02,
                       ),
@@ -126,6 +157,11 @@ class RegisterScreen extends StatelessWidget {
                       ),
                       SizedBox(
                         height: Get.context!.height * 0.02,
+                      ),
+                      Wrap(
+                        spacing: 3,
+                        direction: Axis.horizontal,
+                        children: techChips(),
                       ),
                       SizedBox(
                         height: Get.context!.height * 0.04,
@@ -153,71 +189,15 @@ class RegisterScreen extends StatelessWidget {
                       SizedBox(
                         height: Get.context!.height * 0.05,
                       ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "نرحب بتواصلكم معنا",
-                          style: TextStyle(
-                              fontSize: 14, color: Colors.grey.shade600),
-                        ),
+                      const Footer(),
+                      SizedBox(
+                        height: Get.context!.height * 0.01,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "19450",
-                            style: TextStyle(
-                                fontSize: 12, color: Colors.grey.shade600),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          const Icon(
-                            Icons.phone,
-                            size: 14,
-                            color: AppColors.mainBlueColor,
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          const VerticalDivider(),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            "contact_us@resala.org",
-                            style: TextStyle(
-                                fontSize: 12, color: Colors.grey.shade600),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          const Icon(
-                            Icons.mail,
-                            size: 14,
-                            color: AppColors.mainRedColor,
-                          ),
-                        ],
-                      )
                     ],
                   ),
                 )
               : const CustomLoader();
         }),
-      ),
-    );
-  }
-
-  Widget buildDateTimePicker(String data) {
-    return ListTile(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30.0),
-        side: BorderSide(color: AppColors.mainRedColor, width: 1.5),
-      ),
-      title: Text(data == "" ? "تاريخ الميلاد" : data),
-      leading: const Icon(
-        Icons.calendar_today,
-        color: AppColors.mainRedColor,
       ),
     );
   }

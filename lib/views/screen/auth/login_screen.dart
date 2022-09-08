@@ -7,6 +7,7 @@ import 'package:resala/views/widget/app_text_field.dart';
 import 'package:resala/views/widget/colors.dart';
 import 'package:resala/views/widget/custom_loader.dart';
 import 'package:resala/views/widget/custom_snackbar.dart';
+import 'package:resala/views/widget/footer.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -113,52 +114,7 @@ class LoginScreen extends StatelessWidget {
                       SizedBox(
                         height: Get.context!.height * 0.1,
                       ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "نرحب بتواصلكم معنا",
-                          style: TextStyle(
-                              fontSize: 14, color: Colors.grey.shade600),
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "19450",
-                            style: TextStyle(
-                                fontSize: 12, color: Colors.grey.shade600),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          const Icon(
-                            Icons.phone,
-                            size: 14,
-                            color: AppColors.mainBlueColor,
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          const VerticalDivider(),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            "contact_us@resala.org",
-                            style: TextStyle(
-                                fontSize: 12, color: Colors.grey.shade600),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Icon(
-                            Icons.mail,
-                            size: 14,
-                            color: AppColors.mainRedColor,
-                          ),
-                        ],
-                      )
+                      const Footer(),
                     ],
                   ),
                 )
