@@ -1,30 +1,4 @@
-// ignore: camel_case_types
-class registerModel {
-  String? message;
-  Data? data;
-  bool? success;
-
-  registerModel({this.message, this.data, this.success});
-
-  registerModel.fromJson(Map<String, dynamic> json) {
-    message = json['message'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
-    success = json['success'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['message'] = message;
-    if (this.data != null) {
-      data['data'] = this.data!.toJson();
-    }
-    data['success'] = success;
-    return data;
-  }
-}
-
-class Data {
-  int? id;
+class RegisterModel {
   String? name;
   String? userName;
   String? mobile;
@@ -33,22 +7,19 @@ class Data {
   String? image;
   String? email;
   String? userTypeId;
-  String? apiToken;
 
-  Data(
-      {this.id,
-      this.name,
-      this.userName,
-      this.mobile,
-      this.nationalId,
-      this.birthDate,
-      this.image,
-      this.email,
-      this.userTypeId,
-      this.apiToken});
+  RegisterModel({
+    this.name,
+    this.userName,
+    this.mobile,
+    this.nationalId,
+    this.birthDate,
+    this.image,
+    this.email,
+    this.userTypeId,
+  });
 
-  Data.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+  RegisterModel.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     userName = json['user_name'];
     mobile = json['mobile'];
@@ -57,12 +28,11 @@ class Data {
     image = json['image'];
     email = json['email'];
     userTypeId = json['user_type_id'];
-    apiToken = json['api_token'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
+
     data['name'] = name;
     data['user_name'] = userName;
     data['mobile'] = mobile;
@@ -71,7 +41,6 @@ class Data {
     data['image'] = image;
     data['email'] = email;
     data['user_type_id'] = userTypeId;
-    data['api_token'] = apiToken;
     return data;
   }
 }

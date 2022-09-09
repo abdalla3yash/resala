@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:resala/controller/controllers/auth_controller.dart';
+import 'package:resala/model/models/register_model.dart';
+import 'package:resala/model/routes/router.dart';
 import 'package:resala/views/widget/app_text_field.dart';
 import 'package:resala/views/widget/colors.dart';
 import 'package:resala/views/widget/custom_loader.dart';
+import 'package:resala/views/widget/custom_snackbar.dart';
 import 'package:resala/views/widget/footer.dart';
 import 'package:resala/views/widget/time_picker.dart';
 
@@ -26,38 +29,74 @@ class _RegisterScreenState extends State<RegisterScreen>
     var phoneController = TextEditingController();
     var usernameController = TextEditingController();
     var nationalIDController = TextEditingController();
-    var userTybeIDController = TextEditingController();
     var passwordController = TextEditingController();
+    int? defaultChoiceIndex;
 
-    int? selectedIndex;
-    List<String> chipsList = [
+    void registeration(AuthController authController) {
+      String name = nameController.text.trim();
+      String email = emailController.text.trim();
+      String password = passwordController.text.trim();
+      String phone = phoneController.text.trim();
+      String username = usernameController.text.trim();
+      String nationalID = nationalIDController.text.trim();
+      String userType = defaultChoiceIndex.toString();
+      String birthDay = dateSub.toString();
+
+      if (name.isEmpty) {
+        showCustomSnackBar("من فضلك أدخل الاسم بالكامل", title: "الاسم");
+      } else if (username.isEmpty) {
+        showCustomSnackBar("من فضلك أدخل اسم المستخدم", title: "اسم المستخدم");
+      } else if (email.isEmpty) {
+        showCustomSnackBar("من فضلك أدخل البريد الالكتروني",
+            title: "البريد الالكتروني");
+      } else if (phone.isEmpty) {
+        showCustomSnackBar("من فضلك أدخل رقم الهاتف ", title: "رقم الهاتف");
+      } else if (nationalID.isEmpty) {
+        showCustomSnackBar("من فضلك أدخل الرقم القومي", title: "الرقم القومي");
+      } else if (birthDay.isEmpty) {
+        showCustomSnackBar("من فضلك أدخل تاريخ الميلاد",
+            title: "تاريخ الميلاد");
+      } else if (userType.isEmpty) {
+        showCustomSnackBar("من فضلك يجب اختيار نوع المسئوليه",
+            title: "نوع المسئوليه");
+      } else if (password.isEmpty) {
+        showCustomSnackBar("من فضلك أدخل كلمه السر", title: "كلمه السر");
+      } else if (!GetUtils.isEmail(email)) {
+        showCustomSnackBar("من فضلك أدخل عنوان بريد الكتروني صالح",
+            title: "البريد الالكتروني");
+      } else if (password.length < 6) {
+        showCustomSnackBar("كلمه السر يجب أن تكون اكثر من 6 حروف",
+            title: "كلمه السر");
+      } else if (nationalID.length != 14) {
+        showCustomSnackBar("من فضلك أدخل رقم قومي صالح", title: "الرقم القومي");
+      } else {
+        showCustomSnackBar("تم انشاء الحساب بنجاح",
+            title: "رساله", color: AppColors.mainBlueColor);
+        RegisterModel registermodel = RegisterModel(
+          name: name,
+          nationalId: nationalID,
+          birthDate: birthDay,
+          email: email,
+          userName: username,
+          mobile: phone,
+          userTypeId: userType,
+          image: "assets/img/profile.jpg",
+        );
+        authController.registeration(registermodel).then((status) {
+          if (status.isSuccess) {
+            Get.offNamed(RouteHelper.getHome());
+          } else {
+            showCustomSnackBar(status.message);
+          }
+        });
+      }
+    }
+
+    List<String> choicesList = [
       "مسئول",
       "متطوع",
       "مركزي / مدير",
     ];
-    List<Widget> techChips() {
-      List<Widget> chips = [];
-      for (int i = 0; i < chipsList.length; i++) {
-        Widget item = Padding(
-          padding: const EdgeInsets.only(left: 10, right: 5),
-          child: ChoiceChip(
-            label: Text(chipsList[i].toString()),
-            labelStyle: const TextStyle(color: Colors.white),
-            backgroundColor: AppColors.mainRedColor,
-            selectedColor: AppColors.mainBlueColor,
-            disabledColor: AppColors.whiteColor,
-            selected: selectedIndex == i,
-            onSelected: (bool value) {
-              setState(() {
-                selectedIndex = i;
-              });
-            },
-          ),
-        );
-        chips.add(item);
-      }
-      return chips;
-    }
 
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
@@ -119,7 +158,7 @@ class _RegisterScreenState extends State<RegisterScreen>
                                   context: context,
                                   initialDate: DateTime.now(),
                                   firstDate: DateTime(1950),
-                                  lastDate: DateTime(2050),
+                                  lastDate: DateTime.now(),
                                   currentDate: DateTime.now(),
                                   initialEntryMode:
                                       DatePickerEntryMode.calendar,
@@ -159,15 +198,46 @@ class _RegisterScreenState extends State<RegisterScreen>
                         height: Get.context!.height * 0.02,
                       ),
                       Wrap(
-                        spacing: 3,
-                        direction: Axis.horizontal,
-                        children: techChips(),
+                        spacing: 8,
+                        children: List.generate(
+                          choicesList.length,
+                          (index) {
+                            return ChoiceChip(
+                              labelPadding: const EdgeInsets.all(2.0),
+                              label: Text(
+                                choicesList[index],
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2!
+                                    .copyWith(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                    ),
+                              ),
+                              selected: defaultChoiceIndex == index,
+                              selectedColor: AppColors.mainBlueColor,
+                              onSelected: (value) {
+                                setState(
+                                  () {
+                                    defaultChoiceIndex =
+                                        value ? index : defaultChoiceIndex;
+                                  },
+                                );
+                              },
+                              elevation: 1,
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                            );
+                          },
+                        ),
                       ),
                       SizedBox(
                         height: Get.context!.height * 0.04,
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          registeration(controller);
+                        },
                         child: Container(
                           width: Get.context!.width * 0.9,
                           height: Get.context!.height / 13,

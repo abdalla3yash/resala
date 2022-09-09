@@ -17,7 +17,7 @@ class LoginScreen extends StatelessWidget {
     var emailController = TextEditingController();
     var passwordController = TextEditingController();
 
-    void _login(AuthController authController) {
+    void login(AuthController authController) {
       String email = emailController.text.trim();
       String password = passwordController.text.trim();
       if (email.isEmpty) {
@@ -91,7 +91,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          _login(controller);
+                          login(controller);
                         },
                         child: Container(
                           width: Get.context!.width * 0.9,

@@ -6,16 +6,23 @@ void showCustomSnackBar(String message,
     {bool isError = true,
     Color color = Colors.redAccent,
     String title = "Error"}) {
-  Get.snackbar(title, message,
-      titleText: Text(
-        title,
-        style: const TextStyle(color: AppColors.whiteColor),
+  Get.snackbar(
+    title,
+    message,
+    titleText: Text(
+      title,
+      style: const TextStyle(
+        color: AppColors.whiteColor,
       ),
-      messageText: Text(
-        message,
-        style: const TextStyle(color: Colors.white),
+    ),
+    messageText: Text(
+      message,
+      style: const TextStyle(
+        color: Colors.white,
       ),
-      colorText: Colors.white,
-      snackPosition: SnackPosition.TOP,
-      backgroundColor: color);
+    ),
+    colorText: Colors.white,
+    snackPosition: SnackPosition.TOP,
+    backgroundColor: color,
+  );
 }
