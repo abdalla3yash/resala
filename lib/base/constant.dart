@@ -11,5 +11,6 @@ class AppConstant {
 
   // auth end Points
   static const String REGISTERATION_URL = "/register";
+  static const String USER_TYPE = "/user_type";
   static const String LOGIN_URL = "/login";
 }

@@ -13,9 +13,13 @@ class AuthRepo {
     required this.sharedPreferences,
   });
 
-  Future<Response> registeration(RegisterModel model) async {
+  Future<Response> registeration(RegisterData model) async {
     return await apiClient.postData(
         AppConstant.REGISTERATION_URL, model.toJson());
+  }
+
+  Future<Response> getUserTypeList() async {
+    return await apiClient.getData(AppConstant.USER_TYPE);
   }
 
   Future<Response> login(String email, String password) async {

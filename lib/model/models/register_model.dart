@@ -1,4 +1,29 @@
-class RegisterModel {
+class registerModel {
+  String? message;
+  RegisterData? data;
+  bool? success;
+
+  registerModel({this.message, this.data, this.success});
+
+  registerModel.fromJson(Map<String, dynamic> json) {
+    message = json['message'];
+    data = json['data'] != null ? RegisterData.fromJson(json['data']) : null;
+    success = json['success'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    data['success'] = success;
+    return data;
+  }
+}
+
+class RegisterData {
+  int? id;
   String? name;
   String? userName;
   String? mobile;
@@ -7,19 +32,22 @@ class RegisterModel {
   String? image;
   String? email;
   String? userTypeId;
+  String? apiToken;
 
-  RegisterModel({
-    this.name,
-    this.userName,
-    this.mobile,
-    this.nationalId,
-    this.birthDate,
-    this.image,
-    this.email,
-    this.userTypeId,
-  });
+  RegisterData(
+      {this.id,
+      this.name,
+      this.userName,
+      this.mobile,
+      this.nationalId,
+      this.birthDate,
+      this.image,
+      this.email,
+      this.userTypeId,
+      this.apiToken});
 
-  RegisterModel.fromJson(Map<String, dynamic> json) {
+  RegisterData.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     name = json['name'];
     userName = json['user_name'];
     mobile = json['mobile'];
@@ -28,11 +56,12 @@ class RegisterModel {
     image = json['image'];
     email = json['email'];
     userTypeId = json['user_type_id'];
+    apiToken = json['api_token'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-
+    data['id'] = id;
     data['name'] = name;
     data['user_name'] = userName;
     data['mobile'] = mobile;
@@ -41,6 +70,7 @@ class RegisterModel {
     data['image'] = image;
     data['email'] = email;
     data['user_type_id'] = userTypeId;
+    data['api_token'] = apiToken;
     return data;
   }
 }

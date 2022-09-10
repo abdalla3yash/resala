@@ -8,8 +8,18 @@ import 'package:resala/views/widget/app_text_field.dart';
 import 'package:resala/views/widget/colors.dart';
 import 'package:resala/views/widget/custom_loader.dart';
 import 'package:resala/views/widget/custom_snackbar.dart';
+import 'package:resala/views/widget/dropdown_list_widget.dart';
 import 'package:resala/views/widget/footer.dart';
 import 'package:resala/views/widget/time_picker.dart';
+
+List<DropdownMenuItem<String>> get dropdownItems {
+  List<DropdownMenuItem<String>> menuItems = [
+    DropdownMenuItem(child: Text("مسئول"), value: "مسئول"),
+    DropdownMenuItem(child: Text("متطوع"), value: "متطوع"),
+    DropdownMenuItem(child: Text("مركزي / مدير"), value: "مركزي / مدير"),
+  ];
+  return menuItems;
+}
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -30,7 +40,7 @@ class _RegisterScreenState extends State<RegisterScreen>
     var usernameController = TextEditingController();
     var nationalIDController = TextEditingController();
     var passwordController = TextEditingController();
-    int? defaultChoiceIndex;
+    String? selectedValue;
 
     void registeration(AuthController authController) {
       String name = nameController.text.trim();
@@ -39,7 +49,7 @@ class _RegisterScreenState extends State<RegisterScreen>
       String phone = phoneController.text.trim();
       String username = usernameController.text.trim();
       String nationalID = nationalIDController.text.trim();
-      String userType = defaultChoiceIndex.toString();
+      String userType = selectedValue!;
       String birthDay = dateSub.toString();
 
       if (name.isEmpty) {
@@ -72,7 +82,7 @@ class _RegisterScreenState extends State<RegisterScreen>
       } else {
         showCustomSnackBar("تم انشاء الحساب بنجاح",
             title: "رساله", color: AppColors.mainBlueColor);
-        RegisterModel registermodel = RegisterModel(
+        RegisterData registermodel = RegisterData(
           name: name,
           nationalId: nationalID,
           birthDate: birthDay,
@@ -91,14 +101,6 @@ class _RegisterScreenState extends State<RegisterScreen>
         });
       }
     }
-
-    List<String> choicesList = [
-      "مسئول",
-      "متطوع",
-      "مركزي / مدير",
-    ];
-    List<String> _locations = ['A', 'B', 'C', 'D']; // Option 2
-    String? _selectedLocation; // Option 2
 
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
@@ -199,61 +201,19 @@ class _RegisterScreenState extends State<RegisterScreen>
                       SizedBox(
                         height: Get.context!.height * 0.02,
                       ),
-                      Wrap(
-                        spacing: 8,
-                        children: List.generate(
-                          choicesList.length,
-                          (index) {
-                            return ChoiceChip(
-                              labelPadding: const EdgeInsets.all(2.0),
-                              label: Text(
-                                choicesList[index],
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText2!
-                                    .copyWith(
-                                      color: Colors.white,
-                                      fontSize: 14,
-                                    ),
-                              ),
-                              selected: defaultChoiceIndex == index,
-                              selectedColor: AppColors.mainBlueColor,
-                              onSelected: (value) {
-                                setState(
-                                  () {
-                                    defaultChoiceIndex =
-                                        value ? index : defaultChoiceIndex;
-                                  },
-                                );
-                              },
-                              elevation: 1,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                            );
-                          },
-                        ),
-                      ),
                       SizedBox(
                         height: Get.context!.height * 0.04,
                       ),
-                      DropdownButton(
-                        hint: Text(_selectedLocation!.isEmpty
-                            ? 'Please choose a location'
-                            : _selectedLocation
-                                .toString()), // Not necessary for Option 1
-                        value: _selectedLocation,
-                        onChanged: (newValue) {
-                          setState(() {
-                            _selectedLocation = newValue;
-                          });
-                        },
-                        items: _locations.map((location) {
-                          return DropdownMenuItem(
-                            child: Text(location),
-                            value: location,
-                          );
-                        }).toList(),
-                      ),
+                      CustomDropDown(
+                          selectedValue: selectedValue,
+                          function: () {
+                            (String? newValue) {
+                              setState(() {
+                                selectedValue = newValue!;
+                              });
+                            };
+                          },
+                          items: dropdownItems),
                       SizedBox(
                         height: Get.context!.height * 0.04,
                       ),
