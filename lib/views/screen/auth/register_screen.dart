@@ -97,6 +97,8 @@ class _RegisterScreenState extends State<RegisterScreen>
       "متطوع",
       "مركزي / مدير",
     ];
+    List<String> _locations = ['A', 'B', 'C', 'D']; // Option 2
+    String? _selectedLocation; // Option 2
 
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
@@ -230,6 +232,27 @@ class _RegisterScreenState extends State<RegisterScreen>
                             );
                           },
                         ),
+                      ),
+                      SizedBox(
+                        height: Get.context!.height * 0.04,
+                      ),
+                      DropdownButton(
+                        hint: Text(_selectedLocation!.isEmpty
+                            ? 'Please choose a location'
+                            : _selectedLocation
+                                .toString()), // Not necessary for Option 1
+                        value: _selectedLocation,
+                        onChanged: (newValue) {
+                          setState(() {
+                            _selectedLocation = newValue;
+                          });
+                        },
+                        items: _locations.map((location) {
+                          return DropdownMenuItem(
+                            child: Text(location),
+                            value: location,
+                          );
+                        }).toList(),
                       ),
                       SizedBox(
                         height: Get.context!.height * 0.04,
