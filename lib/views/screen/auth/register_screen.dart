@@ -13,10 +13,10 @@ import 'package:resala/views/widget/footer.dart';
 import 'package:resala/views/widget/time_picker.dart';
 
 List<DropdownMenuItem<String>> get dropdownItems {
-  List<DropdownMenuItem<String>> menuItems = [
-    DropdownMenuItem(child: Text("مسئول"), value: "مسئول"),
-    DropdownMenuItem(child: Text("متطوع"), value: "متطوع"),
-    DropdownMenuItem(child: Text("مركزي / مدير"), value: "مركزي / مدير"),
+  List<DropdownMenuItem<String>> menuItems = const [
+    DropdownMenuItem(value: "1", child: Text("مسئول")),
+    DropdownMenuItem(value: "2", child: Text("متطوع")),
+    DropdownMenuItem(value: "3", child: Text("مركزي / مدير")),
   ];
   return menuItems;
 }
@@ -49,7 +49,7 @@ class _RegisterScreenState extends State<RegisterScreen>
       String phone = phoneController.text.trim();
       String username = usernameController.text.trim();
       String nationalID = nationalIDController.text.trim();
-      String userType = selectedValue!;
+      String? userType = selectedValue;
       String birthDay = dateSub.toString();
 
       if (name.isEmpty) {
@@ -63,12 +63,9 @@ class _RegisterScreenState extends State<RegisterScreen>
         showCustomSnackBar("من فضلك أدخل رقم الهاتف ", title: "رقم الهاتف");
       } else if (nationalID.isEmpty) {
         showCustomSnackBar("من فضلك أدخل الرقم القومي", title: "الرقم القومي");
-      } else if (birthDay.isEmpty) {
+      } else if (birthDay == null) {
         showCustomSnackBar("من فضلك أدخل تاريخ الميلاد",
             title: "تاريخ الميلاد");
-      } else if (userType.isEmpty) {
-        showCustomSnackBar("من فضلك يجب اختيار نوع المسئوليه",
-            title: "نوع المسئوليه");
       } else if (password.isEmpty) {
         showCustomSnackBar("من فضلك أدخل كلمه السر", title: "كلمه السر");
       } else if (!GetUtils.isEmail(email)) {
@@ -82,20 +79,24 @@ class _RegisterScreenState extends State<RegisterScreen>
       } else {
         showCustomSnackBar("تم انشاء الحساب بنجاح",
             title: "رساله", color: AppColors.mainBlueColor);
-        RegisterData registermodel = RegisterData(
-          name: name,
-          nationalId: nationalID,
-          birthDate: birthDay,
+
+        authController
+            .registeration(
           email: email,
-          userName: username,
+          password: password,
           mobile: phone,
-          userTypeId: userType,
-          image: "assets/img/profile.jpg",
-        );
-        authController.registeration(registermodel).then((status) {
+          name: name,
+          user_name: username,
+          birth_date: "1998-06-25",
+          national_id: nationalID,
+          user_type_id: "2",
+        )
+            .then((status) {
+          print(status.message);
+          print(birthDay);
           if (status.isSuccess) {
-            Get.offNamed(RouteHelper.getHome());
-          } else {
+            Get.offNamed(RouteHelper.getinitial());
+          } else if (!status.isSuccess) {
             showCustomSnackBar(status.message);
           }
         });
@@ -189,6 +190,9 @@ class _RegisterScreenState extends State<RegisterScreen>
                               ),
                             );
                           }),
+                      SizedBox(
+                        height: Get.context!.height * 0.02,
+                      ),
                       SizedBox(
                         height: Get.context!.height * 0.02,
                       ),

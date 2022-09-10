@@ -32,7 +32,7 @@ class LoginScreen extends StatelessWidget {
       } else {
         authController.login(email, password).then((status) {
           if (status.isSuccess) {
-            Get.toNamed(RouteHelper.getHome());
+            Get.toNamed(RouteHelper.getinitial());
           } else {
             showCustomSnackBar(status.message, title: "عفوآ");
           }

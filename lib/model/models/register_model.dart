@@ -1,28 +1,28 @@
-class registerModel {
+class RegisterModel {
   String? message;
-  RegisterData? data;
+  Data? data;
   bool? success;
 
-  registerModel({this.message, this.data, this.success});
+  RegisterModel({this.message, this.data, this.success});
 
-  registerModel.fromJson(Map<String, dynamic> json) {
+  RegisterModel.fromJson(Map<String, dynamic> json) {
     message = json['message'];
-    data = json['data'] != null ? RegisterData.fromJson(json['data']) : null;
+    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
     success = json['success'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['message'] = message;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['message'] = this.message;
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
-    data['success'] = success;
+    data['success'] = this.success;
     return data;
   }
 }
 
-class RegisterData {
+class Data {
   int? id;
   String? name;
   String? userName;
@@ -34,7 +34,7 @@ class RegisterData {
   String? userTypeId;
   String? apiToken;
 
-  RegisterData(
+  Data(
       {this.id,
       this.name,
       this.userName,
@@ -46,7 +46,7 @@ class RegisterData {
       this.userTypeId,
       this.apiToken});
 
-  RegisterData.fromJson(Map<String, dynamic> json) {
+  Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     userName = json['user_name'];
@@ -60,17 +60,17 @@ class RegisterData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['name'] = name;
-    data['user_name'] = userName;
-    data['mobile'] = mobile;
-    data['national_id'] = nationalId;
-    data['birth_date'] = birthDate;
-    data['image'] = image;
-    data['email'] = email;
-    data['user_type_id'] = userTypeId;
-    data['api_token'] = apiToken;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['user_name'] = this.userName;
+    data['mobile'] = this.mobile;
+    data['national_id'] = this.nationalId;
+    data['birth_date'] = this.birthDate;
+    data['image'] = this.image;
+    data['email'] = this.email;
+    data['user_type_id'] = this.userTypeId;
+    data['api_token'] = this.apiToken;
     return data;
   }
 }

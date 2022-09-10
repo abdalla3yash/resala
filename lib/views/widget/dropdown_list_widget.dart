@@ -1,11 +1,13 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:resala/views/widget/colors.dart';
 
 class CustomDropDown extends StatelessWidget {
-  var selectedValue;
-  var function;
-  var items;
+  // ignore: prefer_typing_uninitialized_variables
+  var items, selectedValue, function;
+
   CustomDropDown(
       {super.key,
       required this.selectedValue,
@@ -15,18 +17,21 @@ class CustomDropDown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: Get.context!.width * 0.05),
+      margin: EdgeInsets.symmetric(
+        horizontal: Get.context!.width * 0.05,
+      ),
       decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(30),
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 5,
-              spreadRadius: 1,
-              offset: const Offset(1, 2),
-              color: AppColors.mainBlueColor.withOpacity(0.15),
-            ),
-          ]),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(30),
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 5,
+            spreadRadius: 1,
+            offset: const Offset(1, 2),
+            color: AppColors.mainBlueColor.withOpacity(0.15),
+          ),
+        ],
+      ),
       child: DropdownButtonFormField(
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(

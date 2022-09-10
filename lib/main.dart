@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:resala/controller/controllers/auth_controller.dart';
 import 'base/dep.dart' as dep;
 import 'model/routes/router.dart';
 
@@ -16,6 +17,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    bool userLogged = Get.find<AuthController>().userLoggedIn();
+
     return GetMaterialApp(
       localizationsDelegates: const [
         GlobalCupertinoLocalizations.delegate,
@@ -32,7 +35,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: "NotoSansArabic",
       ),
-      initialRoute: RouteHelper.getAuth(),
+      initialRoute:
+          userLogged ? RouteHelper.getinitial() : RouteHelper.getSplash(),
       getPages: RouteHelper.routes,
     );
   }

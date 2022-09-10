@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:resala/base/constant.dart';
 import 'package:resala/controller/data/api.dart';
-import 'package:resala/model/models/register_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthRepo {
@@ -13,9 +12,25 @@ class AuthRepo {
     required this.sharedPreferences,
   });
 
-  Future<Response> registeration(RegisterData model) async {
-    return await apiClient.postData(
-        AppConstant.REGISTERATION_URL, model.toJson());
+  Future<Response> registeration(
+      String email,
+      String password,
+      String mobile,
+      String name,
+      String user_name,
+      String national_id,
+      String birth_date,
+      String user_type_id) async {
+    return await apiClient.postData(AppConstant.REGISTERATION_URL, {
+      "email": email,
+      "password": password,
+      "mobile": mobile,
+      "name": name,
+      "user_name": user_name,
+      "national_id": national_id,
+      "birth_date": birth_date,
+      "user_type_id": user_type_id,
+    });
   }
 
   Future<Response> getUserTypeList() async {
