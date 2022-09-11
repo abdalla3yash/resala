@@ -15,7 +15,7 @@ class _LandingPageState extends State<LandingPage> {
   int _selectedIndex = 0;
 
   List pages = [
-    HomeScreen(),
+    const HomeScreen(),
     const AboutScreen(),
     const ProfileScreen(),
   ];

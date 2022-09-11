@@ -7,45 +7,53 @@ import 'package:resala/model/routes/router.dart';
 import 'package:resala/views/widget/colors.dart';
 import 'package:resala/views/widget/custom_loader.dart';
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _current = 0;
+  final CarouselController _controller = CarouselController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.mainRedColor,
-        title: const Text(
-          "رساله",
-          style: TextStyle(fontSize: 20),
-        ),
-        centerTitle: true,
-        leading: GetBuilder<AuthController>(
-          builder: ((controller) {
-            return !controller.isLoading
-                ? IconButton(
-                    onPressed: () {
-                      Get.find<AuthController>().clearSharedData();
-                      Get.offNamed(RouteHelper.getSplash());
-                    },
-                    icon: Icon(Icons.logout),
-                  )
-                : CustomLoader();
-          }),
-        ),
-      ),
       backgroundColor: AppColors.whiteColor,
       body: GetBuilder<HomeController>(
         builder: ((homeController) {
           return homeController.isLoaded
               ? Column(
                   children: [
+                    SizedBox(
+                      height: Get.context!.height * 0.05,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          "نهارك سعيد، \nهتساعد بإيه انهارده..",
+                          style: TextStyle(
+                              fontSize: Get.context!.width * 0.07,
+                              fontFamily: "arslan"),
+                        ),
+                        SizedBox(
+                          height: Get.context!.height * 0.05,
+                          width: Get.context!.height * 0.05,
+                          child: const Center(
+                            child: Image(
+                              image: AssetImage('assets/img/icon.png'),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: Get.context!.height * 0.01,
+                    ),
                     CarouselSlider(
-                      options: CarouselOptions(
-                        autoPlay: true,
-                        aspectRatio: 1.8,
-                        enlargeCenterPage: true,
-                      ),
                       items: homeController.homeImageList
                           .map(
                             (item) => Container(
@@ -76,7 +84,7 @@ class HomeScreen extends StatelessWidget {
                                         decoration: const BoxDecoration(
                                           gradient: LinearGradient(
                                             colors: [
-                                              Color.fromARGB(200, 0, 0, 0),
+                                              AppColors.mainBlueColor,
                                               Color.fromARGB(0, 0, 0, 0)
                                             ],
                                             begin: Alignment.bottomCenter,
@@ -95,10 +103,51 @@ class HomeScreen extends StatelessWidget {
                             ),
                           )
                           .toList(),
+                      carouselController: _controller,
+                      options: CarouselOptions(
+                        autoPlay: true,
+                        enlargeCenterPage: true,
+                        aspectRatio: 2.0,
+                        onPageChanged: (index, reason) {
+                          setState(
+                            () {
+                              _current = index;
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children:
+                          homeController.homeImageList.asMap().entries.map(
+                        (entry) {
+                          return GestureDetector(
+                            onTap: () => _controller.animateToPage(entry.key),
+                            child: Container(
+                              width: 6.0,
+                              height: 6.0,
+                              margin: const EdgeInsets.symmetric(
+                                vertical: 10.0,
+                                horizontal: 5.0,
+                              ),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: (AppColors.mainRedColor).withOpacity(
+                                  _current == entry.key ? 0.7 : 0.3,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ).toList(),
+                    ),
+                    SizedBox(
+                      height: Get.context!.height * 0.04,
                     ),
                   ],
                 )
-              : CustomLoader();
+              : const CustomLoader();
         }),
       ),
     );
