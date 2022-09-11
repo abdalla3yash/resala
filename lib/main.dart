@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool userLogged = Get.find<AuthController>().userLoggedIn();
+    Get.find<AuthController>().getUserTypeList();
 
     return GetMaterialApp(
       localizationsDelegates: const [
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
         Locale('ar', 'AE'),
       ],
       locale: const Locale('ar', 'AE'),
-      title: 'Flutter Demo',
+      title: 'Resala',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,

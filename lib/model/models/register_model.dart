@@ -1,28 +1,4 @@
 class RegisterModel {
-  String? message;
-  Data? data;
-  bool? success;
-
-  RegisterModel({this.message, this.data, this.success});
-
-  RegisterModel.fromJson(Map<String, dynamic> json) {
-    message = json['message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
-    success = json['success'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
-    if (this.data != null) {
-      data['data'] = this.data!.toJson();
-    }
-    data['success'] = this.success;
-    return data;
-  }
-}
-
-class Data {
   int? id;
   String? name;
   String? userName;
@@ -32,21 +8,20 @@ class Data {
   String? image;
   String? email;
   String? userTypeId;
-  String? apiToken;
 
-  Data(
-      {this.id,
-      this.name,
-      this.userName,
-      this.mobile,
-      this.nationalId,
-      this.birthDate,
-      this.image,
-      this.email,
-      this.userTypeId,
-      this.apiToken});
+  RegisterModel({
+    this.id,
+    this.name,
+    this.userName,
+    this.mobile,
+    this.nationalId,
+    this.birthDate,
+    this.image,
+    this.email,
+    this.userTypeId,
+  });
 
-  Data.fromJson(Map<String, dynamic> json) {
+  RegisterModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     userName = json['user_name'];
@@ -56,21 +31,19 @@ class Data {
     image = json['image'];
     email = json['email'];
     userTypeId = json['user_type_id'];
-    apiToken = json['api_token'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['user_name'] = this.userName;
-    data['mobile'] = this.mobile;
-    data['national_id'] = this.nationalId;
-    data['birth_date'] = this.birthDate;
-    data['image'] = this.image;
-    data['email'] = this.email;
-    data['user_type_id'] = this.userTypeId;
-    data['api_token'] = this.apiToken;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['user_name'] = userName;
+    data['mobile'] = mobile;
+    data['national_id'] = nationalId;
+    data['birth_date'] = birthDate;
+    data['image'] = image;
+    data['email'] = email;
+    data['user_type_id'] = userTypeId;
     return data;
   }
 }

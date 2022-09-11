@@ -1,16 +1,16 @@
 class UserType {
   bool? status;
-  List<Data>? data;
+  List<UserTypeData>? data;
 
   UserType({this.status, this.data});
 
   UserType.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <UserTypeData>[];
       json['data'].forEach((v) {
         data!.add(
-          Data.fromJson(v),
+          UserTypeData.fromJson(v),
         );
       });
     }
@@ -26,15 +26,15 @@ class UserType {
   }
 }
 
-class Data {
+class UserTypeData {
   int? id;
   String? name;
   String? createdAt;
   String? updatedAt;
 
-  Data({this.id, this.name, this.createdAt, this.updatedAt});
+  UserTypeData({this.id, this.name, this.createdAt, this.updatedAt});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  UserTypeData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     createdAt = json['created_at'];

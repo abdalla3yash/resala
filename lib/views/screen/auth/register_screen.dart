@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:resala/controller/controllers/auth_controller.dart';
 import 'package:resala/model/models/register_model.dart';
+import 'package:resala/model/models/user_type_model.dart';
 import 'package:resala/model/routes/router.dart';
 import 'package:resala/views/widget/app_text_field.dart';
 import 'package:resala/views/widget/colors.dart';
@@ -11,15 +12,6 @@ import 'package:resala/views/widget/custom_snackbar.dart';
 import 'package:resala/views/widget/dropdown_list_widget.dart';
 import 'package:resala/views/widget/footer.dart';
 import 'package:resala/views/widget/time_picker.dart';
-
-List<DropdownMenuItem<String>> get dropdownItems {
-  List<DropdownMenuItem<String>> menuItems = const [
-    DropdownMenuItem(value: "1", child: Text("مسئول")),
-    DropdownMenuItem(value: "2", child: Text("متطوع")),
-    DropdownMenuItem(value: "3", child: Text("مركزي / مدير")),
-  ];
-  return menuItems;
-}
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -30,9 +22,11 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen>
     with TickerProviderStateMixin {
+  var _defaultChoiceIndex;
   @override
   Widget build(BuildContext context) {
     final ValueNotifier<DateTime?> dateSub = ValueNotifier(null);
+    String? userTypeID;
 
     var emailController = TextEditingController();
     var nameController = TextEditingController();
@@ -40,7 +34,6 @@ class _RegisterScreenState extends State<RegisterScreen>
     var usernameController = TextEditingController();
     var nationalIDController = TextEditingController();
     var passwordController = TextEditingController();
-    String? selectedValue;
 
     void registeration(AuthController authController) {
       String name = nameController.text.trim();
@@ -49,7 +42,7 @@ class _RegisterScreenState extends State<RegisterScreen>
       String phone = phoneController.text.trim();
       String username = usernameController.text.trim();
       String nationalID = nationalIDController.text.trim();
-      String? userType = selectedValue;
+
       String birthDay = dateSub.toString();
 
       if (name.isEmpty) {
@@ -206,18 +199,41 @@ class _RegisterScreenState extends State<RegisterScreen>
                         height: Get.context!.height * 0.02,
                       ),
                       SizedBox(
-                        height: Get.context!.height * 0.04,
-                      ),
-                      CustomDropDown(
-                          selectedValue: selectedValue,
-                          function: () {
-                            (String? newValue) {
-                              setState(() {
-                                selectedValue = newValue!;
-                              });
-                            };
+                        width: double.maxFinite,
+                        height: 80,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: controller.UserTypeList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ChoiceChip(
+                                label:
+                                    Text(controller.UserTypeList[index].name!),
+                                selected: _defaultChoiceIndex == index,
+                                selectedColor: AppColors.mainRedColor,
+                                onSelected: (bool selected) {
+                                  setState(
+                                    () {
+                                      _defaultChoiceIndex =
+                                          selected ? index : 2;
+                                      userTypeID = controller
+                                          .UserTypeList[index].id
+                                          .toString();
+                                      print(
+                                        "userTypeID $userTypeID",
+                                      );
+                                    },
+                                  );
+                                },
+                                backgroundColor: AppColors.mainBlueColor,
+                                labelStyle:
+                                    const TextStyle(color: Colors.white),
+                              ),
+                            );
                           },
-                          items: dropdownItems),
+                        ),
+                      ),
                       SizedBox(
                         height: Get.context!.height * 0.04,
                       ),

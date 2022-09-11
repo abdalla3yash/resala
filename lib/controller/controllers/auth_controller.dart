@@ -38,9 +38,7 @@ class AuthController extends GetxController implements GetxService {
     );
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
-      print("registeration here ${response.body['data']["api_token"]}");
       authRepo.saveUserToken(response.body["data"]['api_token']);
-      print("registeration here ${response.body['data']["api_token"]}");
       responseModel = ResponseModel(true, response.body['data']["api_token"]);
     } else {
       responseModel = ResponseModel(false, response.statusText!);
@@ -57,7 +55,6 @@ class AuthController extends GetxController implements GetxService {
     late ResponseModel responseModel;
     if (response.statusCode == 200) {
       authRepo.saveUserToken(response.body['data']["api_token"]);
-      print(response.body['data']["api_token"]);
       responseModel = ResponseModel(true, response.body['data']["api_token"]);
     } else {
       responseModel = ResponseModel(false, response.statusText!);
