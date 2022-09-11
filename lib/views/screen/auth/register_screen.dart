@@ -23,17 +23,23 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen>
     with TickerProviderStateMixin {
   var _defaultChoiceIndex;
+  TextEditingController dateinputController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController nationalIDController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    dateinputController.text = "";
+  }
+
   @override
   Widget build(BuildContext context) {
-    final ValueNotifier<DateTime?> dateSub = ValueNotifier(null);
     String? userTypeID;
-
-    var emailController = TextEditingController();
-    var nameController = TextEditingController();
-    var phoneController = TextEditingController();
-    var usernameController = TextEditingController();
-    var nationalIDController = TextEditingController();
-    var passwordController = TextEditingController();
 
     void registeration(AuthController authController) {
       String name = nameController.text.trim();
@@ -42,8 +48,7 @@ class _RegisterScreenState extends State<RegisterScreen>
       String phone = phoneController.text.trim();
       String username = usernameController.text.trim();
       String nationalID = nationalIDController.text.trim();
-
-      String birthDay = dateSub.toString();
+      String birthDay = dateinputController.text.trim();
 
       if (name.isEmpty) {
         showCustomSnackBar("من فضلك أدخل الاسم بالكامل", title: "الاسم");
@@ -80,13 +85,11 @@ class _RegisterScreenState extends State<RegisterScreen>
           mobile: phone,
           name: name,
           user_name: username,
-          birth_date: "1998-06-25",
+          birth_date: birthDay,
           national_id: nationalID,
           user_type_id: "2",
         )
             .then((status) {
-          print(status.message);
-          print(birthDay);
           if (status.isSuccess) {
             Get.offNamed(RouteHelper.getinitial());
           } else if (!status.isSuccess) {
@@ -147,42 +150,38 @@ class _RegisterScreenState extends State<RegisterScreen>
                       SizedBox(
                         height: Get.context!.height * 0.02,
                       ),
-                      ValueListenableBuilder<DateTime?>(
-                          valueListenable: dateSub,
-                          builder: (context, dateVal, child) {
-                            return InkWell(
-                              onTap: () async {
-                                var date = await showDatePicker(
-                                  context: context,
-                                  initialDate: DateTime.now(),
-                                  firstDate: DateTime(1950),
-                                  lastDate: DateTime.now(),
-                                  currentDate: DateTime.now(),
-                                  initialEntryMode:
-                                      DatePickerEntryMode.calendar,
-                                  initialDatePickerMode: DatePickerMode.day,
-                                  builder: (context, child) {
-                                    return Theme(
-                                      data: Theme.of(context).copyWith(
-                                        colorScheme: ColorScheme.fromSwatch(
-                                          primarySwatch: Colors.red,
-                                          accentColor: AppColors.mainBlueColor,
-                                          backgroundColor: Colors.lightBlue,
-                                          cardColor: Colors.white,
-                                        ),
-                                      ),
-                                      child: child!,
-                                    );
+                      Container(
+                        padding: const EdgeInsets.all(15),
+                        height: 150,
+                        child: Center(
+                          child: TextField(
+                            controller: dateinputController,
+                            decoration: const InputDecoration(
+                              icon: Icon(Icons.calendar_today),
+                              labelText: "تاريخ الميلاد",
+                            ),
+                            readOnly: true,
+                            onTap: () async {
+                              DateTime? pickedDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(1950),
+                                lastDate: DateTime.now(),
+                              );
+
+                              if (pickedDate != null) {
+                                String formattedDate =
+                                    DateFormat('yyyy-MM-dd').format(pickedDate);
+                                setState(
+                                  () {
+                                    dateinputController.text = formattedDate;
                                   },
                                 );
-                                dateSub.value = date;
-                              },
-                              child: CustomTimePicker(
-                                data:
-                                    dateVal != null ? convertDate(dateVal) : '',
-                              ),
-                            );
-                          }),
+                              }
+                            },
+                          ),
+                        ),
+                      ),
                       SizedBox(
                         height: Get.context!.height * 0.02,
                       ),
@@ -273,9 +272,5 @@ class _RegisterScreenState extends State<RegisterScreen>
         }),
       ),
     );
-  }
-
-  String convertDate(DateTime dateTime) {
-    return DateFormat('yyyy-MM-dd').format(dateTime);
   }
 }
