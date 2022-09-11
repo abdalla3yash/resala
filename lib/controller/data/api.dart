@@ -7,6 +7,7 @@ class ApiClient extends GetConnect implements GetxService {
   final String appBaseURL;
   SharedPreferences sharedPreferences;
   late Map<String, String> _mainHeaders;
+  Map<String, String> get headers => _mainHeaders;
 
   ApiClient({required this.appBaseURL, required this.sharedPreferences}) {
     baseUrl = appBaseURL;

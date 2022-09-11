@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:resala/controller/controllers/auth_controller.dart';
+import 'package:resala/controller/controllers/home_controller.dart';
 import 'base/dep.dart' as dep;
 import 'model/routes/router.dart';
 
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     bool userLogged = Get.find<AuthController>().userLoggedIn();
     Get.find<AuthController>().getUserTypeList();
+    Get.find<HomeController>().getHomeImages();
 
     return GetMaterialApp(
       localizationsDelegates: const [

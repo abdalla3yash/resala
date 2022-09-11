@@ -13,4 +13,7 @@ class AppConstant {
   static const String REGISTERATION_URL = "/register";
   static const String USER_TYPE = "/user_type";
   static const String LOGIN_URL = "/login";
+
+  // home end points
+  static const String HOME_URL = "/homepage";
 }
