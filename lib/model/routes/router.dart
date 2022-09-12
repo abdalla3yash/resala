@@ -36,7 +36,7 @@ class RouteHelper {
     GetPage(
       name: home,
       page: () {
-        return HomeScreen();
+        return const HomeScreen();
       },
       transition: Transition.fadeIn,
     ),

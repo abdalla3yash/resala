@@ -1,9 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:resala/controller/controllers/auth_controller.dart';
 import 'package:resala/controller/controllers/home_controller.dart';
-import 'package:resala/model/routes/router.dart';
 import 'package:resala/views/widget/colors.dart';
 import 'package:resala/views/widget/custom_loader.dart';
 

@@ -1,6 +1,7 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:get/get.dart';
 import 'package:resala/controller/repo/auth_repo.dart';
-import 'package:resala/model/models/register_model.dart';
 import 'package:resala/model/models/response_model.dart';
 import 'package:resala/model/models/user_type_model.dart';
 
@@ -9,7 +10,7 @@ class AuthController extends GetxController implements GetxService {
   AuthController({required this.authRepo});
 
   List<dynamic> _userTypeList = [];
-  List<dynamic> get UserTypeList => _userTypeList;
+  List<dynamic> get userTypeList => _userTypeList;
 
   bool _isLoading = false;
   bool get isLoading => _isLoading;

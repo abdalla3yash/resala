@@ -9,14 +9,14 @@ class AboutScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.mainRedColor,
-        title: Text(
+        title: const Text(
           "رساله",
           style: TextStyle(fontSize: 20),
         ),
         centerTitle: true,
       ),
       backgroundColor: AppColors.whiteColor,
-      body: Center(
+      body: const Center(
         child: Text("الصفحه تحت الانشاء"),
       ),
     );

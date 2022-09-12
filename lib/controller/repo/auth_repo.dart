@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:get/get.dart';
 import 'package:resala/base/constant.dart';
 import 'package:resala/controller/data/api.dart';

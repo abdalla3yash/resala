@@ -57,7 +57,7 @@ class _RegisterScreenState extends State<RegisterScreen>
         showCustomSnackBar("من فضلك أدخل رقم الهاتف ", title: "رقم الهاتف");
       } else if (nationalID.isEmpty) {
         showCustomSnackBar("من فضلك أدخل الرقم القومي", title: "الرقم القومي");
-      } else if (birthDay == null) {
+      } else if (birthDay.isEmpty) {
         showCustomSnackBar("من فضلك أدخل تاريخ الميلاد",
             title: "تاريخ الميلاد");
       } else if (password.isEmpty) {
@@ -298,7 +298,7 @@ class _RegisterScreenState extends State<RegisterScreen>
               ? ChoiceChip(
                   selected: _selectedIndex == i,
                   label: Text(
-                    controller.UserTypeList[i].name,
+                    controller.userTypeList[i].name,
                     style: const TextStyle(color: Colors.white, fontSize: 14),
                   ),
                   elevation: 10,
@@ -312,8 +312,7 @@ class _RegisterScreenState extends State<RegisterScreen>
                         if (selected) {
                           _selectedIndex = i;
                           userTypeIDController.text =
-                              controller.UserTypeList[i].id.toString();
-                          print(userTypeIDController.text);
+                              controller.userTypeList[i].id.toString();
                         }
                       },
                     );
