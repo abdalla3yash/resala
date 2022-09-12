@@ -2,16 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:resala/controller/controllers/auth_controller.dart';
-import 'package:resala/model/models/register_model.dart';
-import 'package:resala/model/models/user_type_model.dart';
 import 'package:resala/model/routes/router.dart';
 import 'package:resala/views/widget/app_text_field.dart';
 import 'package:resala/views/widget/colors.dart';
 import 'package:resala/views/widget/custom_loader.dart';
 import 'package:resala/views/widget/custom_snackbar.dart';
-import 'package:resala/views/widget/dropdown_list_widget.dart';
 import 'package:resala/views/widget/footer.dart';
-import 'package:resala/views/widget/time_picker.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -22,7 +18,6 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen>
     with TickerProviderStateMixin {
-  var _defaultChoiceIndex;
   TextEditingController dateinputController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController nameController = TextEditingController();
@@ -30,6 +25,8 @@ class _RegisterScreenState extends State<RegisterScreen>
   TextEditingController usernameController = TextEditingController();
   TextEditingController nationalIDController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController userTypeIDController = TextEditingController();
+  int? _selectedIndex;
 
   @override
   void initState() {
@@ -39,8 +36,6 @@ class _RegisterScreenState extends State<RegisterScreen>
 
   @override
   Widget build(BuildContext context) {
-    String? userTypeID;
-
     void registeration(AuthController authController) {
       String name = nameController.text.trim();
       String email = emailController.text.trim();
@@ -49,6 +44,7 @@ class _RegisterScreenState extends State<RegisterScreen>
       String username = usernameController.text.trim();
       String nationalID = nationalIDController.text.trim();
       String birthDay = dateinputController.text.trim();
+      String userTypeId = userTypeIDController.text.trim();
 
       if (name.isEmpty) {
         showCustomSnackBar("من فضلك أدخل الاسم بالكامل", title: "الاسم");
@@ -65,7 +61,10 @@ class _RegisterScreenState extends State<RegisterScreen>
         showCustomSnackBar("من فضلك أدخل تاريخ الميلاد",
             title: "تاريخ الميلاد");
       } else if (password.isEmpty) {
-        showCustomSnackBar("من فضلك أدخل كلمه السر", title: "كلمه السر");
+        showCustomSnackBar("من فضلك يجب اختيار نوع المسئوليه",
+            title: "نوع المسئوليه");
+      } else if (userTypeId.isEmpty) {
+        showCustomSnackBar("من فضلك أدخل رقم قومي صالح", title: "الرقم القومي");
       } else if (!GetUtils.isEmail(email)) {
         showCustomSnackBar("من فضلك أدخل عنوان بريد الكتروني صالح",
             title: "البريد الالكتروني");
@@ -87,7 +86,7 @@ class _RegisterScreenState extends State<RegisterScreen>
           user_name: username,
           birth_date: birthDay,
           national_id: nationalID,
-          user_type_id: "2",
+          user_type_id: userTypeId,
         )
             .then((status) {
           if (status.isSuccess) {
@@ -108,7 +107,7 @@ class _RegisterScreenState extends State<RegisterScreen>
                   child: Column(
                     children: [
                       SizedBox(
-                        height: Get.context!.height * 0.05,
+                        height: Get.context!.height * 0.04,
                       ),
                       AppTextField(
                         textController: nameController,
@@ -151,23 +150,63 @@ class _RegisterScreenState extends State<RegisterScreen>
                         height: Get.context!.height * 0.02,
                       ),
                       Container(
-                        padding: const EdgeInsets.all(15),
-                        height: 150,
+                        margin: EdgeInsets.symmetric(
+                            horizontal: Get.context!.width * 0.05),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(30),
+                            boxShadow: [
+                              BoxShadow(
+                                blurRadius: 5,
+                                spreadRadius: 1,
+                                offset: const Offset(1, 2),
+                                color:
+                                    AppColors.mainBlueColor.withOpacity(0.15),
+                              ),
+                            ]),
                         child: Center(
                           child: TextField(
                             controller: dateinputController,
-                            decoration: const InputDecoration(
-                              icon: Icon(Icons.calendar_today),
-                              labelText: "تاريخ الميلاد",
-                            ),
                             readOnly: true,
+                            decoration: InputDecoration(
+                              hintText: "تاريخ الميلاد",
+                              prefixIcon: const Icon(
+                                Icons.calendar_month_outlined,
+                                color: AppColors.mainRedColor,
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide: const BorderSide(
+                                    width: 1.0, color: Colors.white),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide: const BorderSide(
+                                    width: 1.0, color: Colors.white),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
                             onTap: () async {
                               DateTime? pickedDate = await showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(1950),
-                                lastDate: DateTime.now(),
-                              );
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime(1950),
+                                  lastDate: DateTime.now(),
+                                  builder: (context, child) {
+                                    return Theme(
+                                      data: Theme.of(context).copyWith(
+                                        colorScheme: ColorScheme.fromSwatch(
+                                          primarySwatch: Colors.red,
+                                          accentColor: AppColors.mainBlueColor,
+                                          backgroundColor: Colors.lightBlue,
+                                          cardColor: Colors.white,
+                                        ),
+                                      ),
+                                      child: child!,
+                                    );
+                                  });
 
                               if (pickedDate != null) {
                                 String formattedDate =
@@ -185,9 +224,6 @@ class _RegisterScreenState extends State<RegisterScreen>
                       SizedBox(
                         height: Get.context!.height * 0.02,
                       ),
-                      SizedBox(
-                        height: Get.context!.height * 0.02,
-                      ),
                       AppTextField(
                         textController: passwordController,
                         hintText: "كلمه السر",
@@ -197,44 +233,22 @@ class _RegisterScreenState extends State<RegisterScreen>
                       SizedBox(
                         height: Get.context!.height * 0.02,
                       ),
-                      SizedBox(
-                        width: double.maxFinite,
-                        height: 80,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: controller.UserTypeList.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ChoiceChip(
-                                label:
-                                    Text(controller.UserTypeList[index].name!),
-                                selected: _defaultChoiceIndex == index,
-                                selectedColor: AppColors.mainRedColor,
-                                onSelected: (bool selected) {
-                                  setState(
-                                    () {
-                                      _defaultChoiceIndex =
-                                          selected ? index : 2;
-                                      userTypeID = controller
-                                          .UserTypeList[index].id
-                                          .toString();
-                                      print(
-                                        "userTypeID $userTypeID",
-                                      );
-                                    },
-                                  );
-                                },
-                                backgroundColor: AppColors.mainBlueColor,
-                                labelStyle:
-                                    const TextStyle(color: Colors.white),
-                              ),
-                            );
-                          },
+                      const Align(
+                        alignment: Alignment.centerRight,
+                        child: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            "يرجي اختيار نوع المسئوليه",
+                            style: TextStyle(fontSize: 14),
+                          ),
                         ),
                       ),
                       SizedBox(
-                        height: Get.context!.height * 0.04,
+                        height: 50,
+                        child: _buildChips(),
+                      ),
+                      SizedBox(
+                        height: Get.context!.height * 0.02,
                       ),
                       GestureDetector(
                         onTap: () {
@@ -271,6 +285,54 @@ class _RegisterScreenState extends State<RegisterScreen>
               : const CustomLoader();
         }),
       ),
+    );
+  }
+
+  Widget _buildChips() {
+    List<Widget> chips = [];
+
+    for (int i = 0; i < 3; i++) {
+      GetBuilder<AuthController> choiceChip = GetBuilder<AuthController>(
+        builder: ((controller) {
+          return !controller.isLoading
+              ? ChoiceChip(
+                  selected: _selectedIndex == i,
+                  label: Text(
+                    controller.UserTypeList[i].name,
+                    style: const TextStyle(color: Colors.white, fontSize: 14),
+                  ),
+                  elevation: 10,
+                  pressElevation: 5,
+                  shadowColor: AppColors.mainBlueColor,
+                  backgroundColor: AppColors.mainRedColor.withOpacity(0.5),
+                  selectedColor: AppColors.mainRedColor,
+                  onSelected: (bool selected) {
+                    setState(
+                      () {
+                        if (selected) {
+                          _selectedIndex = i;
+                          userTypeIDController.text =
+                              controller.UserTypeList[i].id.toString();
+                          print(userTypeIDController.text);
+                        }
+                      },
+                    );
+                  },
+                )
+              : const CustomLoader();
+        }),
+      );
+      chips.add(
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: choiceChip,
+        ),
+      );
+    }
+
+    return ListView(
+      scrollDirection: Axis.horizontal,
+      children: chips,
     );
   }
 }

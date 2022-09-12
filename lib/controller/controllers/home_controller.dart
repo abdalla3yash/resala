@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:resala/controller/repo/home_repo.dart';
 import 'package:resala/model/models/home_model.dart';
 
+import 'auth_controller.dart';
+
 class HomeController extends GetxController implements GetxService {
   final HomeRepo homeRepo;
   HomeController({required this.homeRepo});
