@@ -20,7 +20,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     bool userLogged = Get.find<AuthController>().userLoggedIn();
     Get.find<AuthController>().getUserTypeList();
-    Get.find<HomeController>().getHomeImages();
 
     return GetMaterialApp(
       localizationsDelegates: const [

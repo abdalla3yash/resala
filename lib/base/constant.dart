@@ -16,4 +16,7 @@ class AppConstant {
 
   // home end points
   static const String HOME_URL = "/homepage";
+
+  // User end points
+  static const String USER_URL = "/users";
 }
