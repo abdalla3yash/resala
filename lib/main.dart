@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:resala/controller/controllers/auth_controller.dart';
 import 'package:resala/controller/controllers/home_controller.dart';
+import 'package:resala/views/screen/profile/profile_screen.dart';
 import 'base/dep.dart' as dep;
 import 'model/routes/router.dart';
 
@@ -37,8 +38,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: "NotoSansArabic",
       ),
-      initialRoute:
-          userLogged ? RouteHelper.getinitial() : RouteHelper.getSplash(),
+      home: ProfileScreen(),
+      // initialRoute:
+      // userLogged ? RouteHelper.getinitial() : RouteHelper.getSplash(),
       getPages: RouteHelper.routes,
     );
   }
