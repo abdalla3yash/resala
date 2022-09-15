@@ -38,9 +38,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: "NotoSansArabic",
       ),
-      home: ProfileScreen(),
-      // initialRoute:
-      // userLogged ? RouteHelper.getinitial() : RouteHelper.getSplash(),
+      initialRoute:
+          userLogged ? RouteHelper.getinitial() : RouteHelper.getSplash(),
       getPages: RouteHelper.routes,
     );
   }
