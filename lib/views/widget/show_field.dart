@@ -47,7 +47,7 @@ class AccountWidget extends StatelessWidget {
         Spacer(),
         Text(
           text,
-          style: TextStyle(fontSize: 18, color: textColor),
+          style: TextStyle(fontSize: 16, color: textColor),
         ),
         SizedBox(
           width: Get.context!.width * 0.05,

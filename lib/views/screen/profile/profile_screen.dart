@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:resala/controller/controllers/auth_controller.dart';
 import 'package:resala/controller/controllers/user_controller.dart';
+import 'package:resala/model/routes/router.dart';
 import 'package:resala/views/widget/colors.dart';
 import 'package:resala/views/widget/custom_loader.dart';
 import 'package:resala/views/widget/show_field.dart';
@@ -47,6 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     )
                                   : Image.network(
                                       userController.userModel.data![0].image!,
+                                      fit: BoxFit.cover,
                                     ),
                             ),
                           ),
@@ -103,7 +106,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 height: Get.context!.height * 0.02,
                               ),
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  Get.find<AuthController>().clearSharedData();
+                                  Get.offNamed(RouteHelper.getAuth());
+                                },
                                 child: AccountWidget(
                                   icon: Icons.logout,
                                   text: "تسجيل الخروج",

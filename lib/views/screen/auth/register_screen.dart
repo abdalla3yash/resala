@@ -298,7 +298,7 @@ class _RegisterScreenState extends State<RegisterScreen>
               ? ChoiceChip(
                   selected: _selectedIndex == i,
                   label: Text(
-                    controller.userTypeList[i].name,
+                    controller.userTypeList[i]!.name!,
                     style: const TextStyle(color: Colors.white, fontSize: 14),
                   ),
                   elevation: 10,
