@@ -5,7 +5,7 @@ import 'package:resala/controller/controllers/activity_controller.dart';
 import 'package:resala/controller/controllers/home_controller.dart';
 import 'package:resala/views/widget/colors.dart';
 import 'package:resala/views/widget/custom_loader.dart';
-import 'package:resala/views/widget/exandable_text_widget.dart';
+import 'package:resala/views/widget/post_body.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -30,129 +30,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
       body: SingleChildScrollView(
-        child: Column(children: [
-          sliderHomePage(),
-          SizedBox(
-            height: Get.context!.height * 0.02,
-          ),
-          GetBuilder<ActivityController>(
-            builder: ((activityController) {
-              return activityController.isLoaded
-                  ? Container(
-                      width: Get.context!.width * 0.9,
-                      height: Get.context!.height * 0.25,
-                      padding: const EdgeInsets.all(10),
-                      margin: EdgeInsets.symmetric(
-                          horizontal: Get.context!.width * 0.05),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(30),
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 5,
-                              spreadRadius: 1,
-                              offset: const Offset(1, 2),
-                              color: AppColors.mainBlueColor.withOpacity(0.15),
-                            ),
-                          ]),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              CircleAvatar(
-                                backgroundColor: Colors.grey.shade100,
-                                radius: Get.context!.width * 0.06,
-                                child: Center(
-                                  child: Image.asset(
-                                    "assets/img/icon.png",
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: Get.context!.width * 0.03,
-                              ),
-                              Text(
-                                activityController
-                                    .activityModelList[0].userName!,
-                                style: const TextStyle(
-                                  overflow: TextOverflow.ellipsis,
-                                  fontSize: 14,
-                                  color: AppColors.blackColor,
-                                ),
-                              ),
-                              Spacer(),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 10),
-                                child: Text(
-                                  activityController
-                                      .activityModelList[0].activityDate!,
-                                  style: TextStyle(
-                                      fontSize: 10,
-                                      color: AppColors.hintTextColor),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Container(
-                            padding: const EdgeInsets.all(16.0),
-                            width: MediaQuery.of(context).size.width * 0.8,
-                            child: Text(
-                              activityController.activityModelList[0].details!,
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              softWrap: true,
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Container(
-                                child: Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.edit_location_alt,
-                                      color: AppColors.mainBlueColor,
-                                      size: 16,
-                                    ),
-                                    SizedBox(width: Get.context!.width * 0.01),
-                                    Text(
-                                      "في المنزل",
-                                      style: TextStyle(
-                                          fontSize: 10,
-                                          color: AppColors.hintTextColor),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                child: Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.workspace_premium_outlined,
-                                      color: AppColors.mainRedColor,
-                                      size: 16,
-                                    ),
-                                    SizedBox(width: Get.context!.width * 0.01),
-                                    Text(
-                                      "اداريات",
-                                      style: TextStyle(
-                                          fontSize: 10,
-                                          color: AppColors.hintTextColor),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    )
-                  : const CustomLoader();
-            }),
-          ),
-        ]),
+        child: Column(
+          children: [
+            sliderHomePage(),
+            _getAllActivities(),
+          ],
+        ),
       ),
     );
   }
@@ -283,12 +166,41 @@ class _HomeScreenState extends State<HomeScreen> {
                     ).toList(),
                   ),
                   SizedBox(
-                    height: Get.context!.height * 0.04,
+                    height: Get.context!.height * 0.02,
                   ),
                 ],
               )
             : const CustomLoader();
       }),
     );
+  }
+
+  Widget _getAllActivities() {
+    return GetBuilder<ActivityController>(builder: (activityController) {
+      return activityController.isLoaded
+          ? ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: activityController.activityModelList.length,
+              itemBuilder: (context, index) {
+                return activityController.activityModelList.isEmpty
+                    ? Center(child: Text("there is no data"))
+                    : Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: BodyPost(
+                            userName: activityController
+                                .activityModelList[index].userName!,
+                            details: activityController
+                                .activityModelList[index].details!,
+                            date: activityController
+                                .activityModelList[index].activityDate!,
+                            activityInName: activityController
+                                .activityModelList[index].activityInName!,
+                            activityTypeName: activityController
+                                .activityModelList[index].activityTypeName!),
+                      );
+              })
+          : const CustomLoader();
+    });
   }
 }

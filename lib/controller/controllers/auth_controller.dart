@@ -67,13 +67,21 @@ class AuthController extends GetxController implements GetxService {
   }
 
   Future<void> getUserTypeList() async {
+    print('1');
     Response response = await authRepo.getUserTypeList();
+    print(response.statusCode);
     if (response.statusCode == 200) {
+      print('3');
       _userTypeList = [];
+      print('4');
       _userTypeList.addAll(UserType.fromJson(response.body).data!);
+      print(_userTypeList);
       _isLoading = false;
+      print('5');
       update();
-    } else {}
+    } else {
+      print("else");
+    }
   }
 
   void saveUserNumberAndPassword(String number, String password) {
