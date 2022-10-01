@@ -13,7 +13,7 @@ class TopController extends GetxController implements GetxService {
   TopModel get topModel => _topModel;
 
   List<dynamic> _topModelList = [];
-  List<dynamic> get activityModelList => _topModelList;
+  List<dynamic> get topModelList => _topModelList;
 
   Future<void> getAllTop() async {
     Response response = await topRepo.getAllTop();

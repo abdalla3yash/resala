@@ -1,15 +1,16 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:resala/views/widget/colors.dart';
 
-class BodyPost extends StatelessWidget {
-  final String userName, details, date, activityInName, activityTypeName;
-  const BodyPost({
+class TopWidget extends StatelessWidget {
+  final String userName, activityCount, activityTypeName;
+  final ImageProvider image;
+  const TopWidget({
     Key? key,
+    required this.image,
     required this.userName,
-    required this.details,
-    required this.date,
-    required this.activityInName,
+    required this.activityCount,
     required this.activityTypeName,
   }) : super(key: key);
 
@@ -39,10 +40,8 @@ class BodyPost extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.grey.shade200,
               borderRadius: BorderRadius.circular(Get.context!.width * 0.1),
-              image: const DecorationImage(
-                image: AssetImage(
-                  'assets/img/icon.png',
-                ),
+              image: DecorationImage(
+                image: image,
                 fit: BoxFit.cover,
               ),
             ),
@@ -72,7 +71,7 @@ class BodyPost extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        date,
+                        activityTypeName,
                         style: const TextStyle(
                           color: AppColors.hintTextColor,
                           fontSize: 12,
@@ -84,48 +83,10 @@ class BodyPost extends StatelessWidget {
                   Container(
                     margin: const EdgeInsets.only(top: 5.0),
                     child: Text(
-                      details,
+                      "عدد المشاركات ${activityCount}",
                       style: const TextStyle(
                         color: AppColors.blackColor,
                       ),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 10.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            const Icon(Icons.edit_location_alt,
-                                color: AppColors.mainBlueColor),
-                            Container(
-                              margin: const EdgeInsets.only(left: 3.0),
-                              child: Text(
-                                activityInName,
-                                style: const TextStyle(
-                                  color: AppColors.hintTextColor,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: <Widget>[
-                            const Icon(Icons.workspace_premium_outlined,
-                                color: AppColors.mainRedColor),
-                            Container(
-                              margin: const EdgeInsets.only(left: 3.0),
-                              child: Text(
-                                activityTypeName,
-                                style: const TextStyle(
-                                  color: AppColors.hintTextColor,
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ],
                     ),
                   ),
                 ],

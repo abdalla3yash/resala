@@ -37,20 +37,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     children: [
                       Stack(
                         children: [
-                          CircleAvatar(
-                            backgroundColor: Colors.grey.shade200,
-                            radius: Get.context!.width * 0.25,
-                            child: Center(
-                              child: userController.userModel.data![0].image ==
-                                      null
-                                  ? Image.asset(
-                                      "assets/img/icon.png",
-                                      fit: BoxFit.cover,
-                                    )
-                                  : Image.network(
-                                      userController.userModel.data![0].image!,
-                                      fit: BoxFit.cover,
-                                    ),
+                          Container(
+                            height: Get.context!.width * 0.5,
+                            width: Get.context!.width * 0.5,
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade200,
+                              borderRadius: BorderRadius.circular(
+                                  Get.context!.width * 0.5),
+                              image: DecorationImage(
+                                image: userController
+                                            .userModel.data![0].image ==
+                                        null
+                                    ? const NetworkImage(
+                                        "https://pbs.twimg.com/profile_images/1449157560783757313/IjCnPLBx_400x400.jpg")
+                                    : NetworkImage(
+                                        "${userController.userModel.data![0].image!}"),
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                           const Positioned(

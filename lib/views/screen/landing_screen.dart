@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:resala/views/screen/about/about_screen.dart';
+import 'package:resala/views/screen/top/top_screen.dart';
 import 'package:resala/views/screen/home/home_screen.dart';
 import 'package:resala/views/screen/profile/profile_screen.dart';
 import 'package:resala/views/widget/colors.dart';
@@ -17,7 +17,7 @@ class _LandingPageState extends State<LandingPage> {
 
   List pages = [
     const HomeScreen(),
-    const AboutScreen(),
+    const TopScreen(),
     const ProfileScreen(),
   ];
 
