@@ -20,8 +20,6 @@ class ActivityController extends GetxController implements GetxService {
     if (response.statusCode == 200) {
       _activityModelList = [];
       _activityModelList.addAll(ActivityModel.fromJson(response.body).data!);
-      print("response bpdy is :  ${response.body}");
-      print("activity Model List is :  ${_activityModelList}");
       _isLoaded = true;
       update();
     } else {}
