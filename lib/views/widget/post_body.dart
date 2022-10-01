@@ -34,7 +34,11 @@ class BodyPost extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           CircleAvatar(
-            child: Text("H"),
+            backgroundColor: Colors.grey.shade200,
+            child: const Image(
+              image: AssetImage('assets/img/icon.png'),
+              fit: BoxFit.cover,
+            ),
           ),
           const SizedBox(
             width: 5,
@@ -71,9 +75,14 @@ class BodyPost extends StatelessWidget {
                     ],
                   ),
                   Container(
-                      margin: const EdgeInsets.only(top: 5.0),
-                      child: Text(details,
-                          style: const TextStyle(color: AppColors.blackColor))),
+                    margin: const EdgeInsets.only(top: 5.0),
+                    child: Text(
+                      details,
+                      style: const TextStyle(
+                        color: AppColors.blackColor,
+                      ),
+                    ),
+                  ),
                   Container(
                     margin: const EdgeInsets.only(top: 10.0),
                     child: Row(
