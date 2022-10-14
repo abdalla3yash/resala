@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:resala/base/constant.dart';
 import 'package:resala/controller/controllers/top_controller.dart';
 import 'package:resala/views/widget/colors.dart';
 import 'package:resala/views/widget/custom_loader.dart';
@@ -26,7 +27,18 @@ class _TopScreenState extends State<TopScreen> {
         backgroundColor: AppColors.whiteColor,
         body: Column(
           children: [
-            const SizedBox(height: 100),
+            Padding(
+              padding: EdgeInsets.only(
+                right: Get.context!.width * 0.02,
+                top: Get.context!.height * 0.06,
+              ),
+              child: const Align(
+                  alignment: Alignment.topRight,
+                  child: Text(
+                    'قائمه بأعلى خمسه أشخاص قاموا بأنشطه',
+                    style: TextStyle(fontSize: 16),
+                  )),
+            ),
             _getAllActivities(),
           ],
         ));
@@ -41,7 +53,7 @@ class _TopScreenState extends State<TopScreen> {
               itemCount: topController.topModelList.length,
               itemBuilder: (context, index) {
                 return topController.topModelList.isEmpty
-                    ? Center(child: Text("there is no data"))
+                    ? const Center(child: Text("there is no data"))
                     : Padding(
                         padding: const EdgeInsets.only(bottom: 20),
                         child: Container(
@@ -76,7 +88,8 @@ class _TopScreenState extends State<TopScreen> {
                                                 .topModelList[index].image ==
                                             null
                                         ? const NetworkImage(
-                                            "https://pbs.twimg.com/profile_images/1449157560783757313/IjCnPLBx_400x400.jpg")
+                                            AppConstant.ICONURL,
+                                          )
                                         : NetworkImage(
                                             "${topController.topModelList[index].image!}"),
                                     fit: BoxFit.cover,

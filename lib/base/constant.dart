@@ -6,6 +6,8 @@ class AppConstant {
   static const String TOKEN = "";
   static const String NUMBER = "";
   static const String PASSWORD = "";
+  static const String ICONURL =
+      "https://github.com/abdalla3yash/resala/blob/main/assets/img/icon.png?raw=true";
 
   static const String BASE_URL = "https://maghrabi.sha1.tech/api";
 

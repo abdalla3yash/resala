@@ -184,7 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
               itemCount: activityController.activityModelList.length,
               itemBuilder: (context, index) {
                 return activityController.activityModelList.isEmpty
-                    ? Center(child: Text("there is no data"))
+                    ? const Center(child: Text("there is no data"))
                     : Padding(
                         padding: const EdgeInsets.only(bottom: 10),
                         child: BodyPost(

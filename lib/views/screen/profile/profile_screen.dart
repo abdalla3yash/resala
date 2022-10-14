@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:resala/base/constant.dart';
 import 'package:resala/controller/controllers/auth_controller.dart';
 import 'package:resala/controller/controllers/user_controller.dart';
 import 'package:resala/model/routes/router.dart';
@@ -48,10 +49,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 image: userController
                                             .userModel.data![0].image ==
                                         null
-                                    ? const NetworkImage(
-                                        "https://pbs.twimg.com/profile_images/1449157560783757313/IjCnPLBx_400x400.jpg")
-                                    : NetworkImage(
-                                        "${userController.userModel.data![0].image!}"),
+                                    ? const NetworkImage(AppConstant.ICONURL)
+                                    : NetworkImage(userController
+                                        .userModel.data![0].image!),
                                 fit: BoxFit.cover,
                               ),
                             ),
