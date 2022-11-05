@@ -32,15 +32,6 @@ class ApiClient extends GetConnect implements GetxService {
     }
   }
 
-  Future<Response> getter(String uri) async {
-    try {
-      Response response = await get(uri);
-      return response;
-    } catch (e) {
-      return Response(statusCode: 1, statusText: e.toString());
-    }
-  }
-
   void updateHeaders(String token) {
     _mainHeaders = {
       'Content-type': 'application/json; charset=UTF-8',
@@ -48,7 +39,11 @@ class ApiClient extends GetConnect implements GetxService {
     };
   }
 
-  Future<Response> postData(String uri, dynamic body) async {
+  Future<Response> postData(
+    String uri,
+    dynamic body, {
+    Map<String, String>? headers,
+  }) async {
     try {
       Response response = await post(uri, body, headers: _mainHeaders);
       return response;

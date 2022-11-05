@@ -15,20 +15,107 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int? _selectedIndex;
+  TextEditingController userTypeIDController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
     Get.find<HomeController>().getHomeImages();
+    Get.find<HomeController>().getActivityInList();
     Get.find<ActivityController>().getAllActivity();
   }
 
   int _current = 0;
   final CarouselController _controller = CarouselController();
 
+  void _activityInDialog(int count) async {
+    if (count <= 0) {
+      return;
+    } else if (count == 1) {
+      await showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+                title: const Text(
+                  "أين كان نشاطك اليوم؟",
+                ),
+                content: SizedBox(
+                  height: 70,
+                  width: Get.context!.width * 0.7,
+                  child: _buildChips(),
+                ),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('الغاء'),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('التالى'),
+                  ),
+                ],
+              ));
+      _activityInDialog(--count);
+    } else {}
+  }
+
+  Widget _buildChips() {
+    List<Widget> chips = [];
+
+    for (int i = 0; i < 3; i++) {
+      GetBuilder<HomeController> choiceChip = GetBuilder<HomeController>(
+        builder: ((controller) {
+          return controller.isLoaded
+              ? ChoiceChip(
+                  selected: _selectedIndex == i,
+                  label: Text(
+                    controller.activityInList[i]!.name!,
+                    style: const TextStyle(color: Colors.white, fontSize: 14),
+                  ),
+                  elevation: 5,
+                  pressElevation: 5,
+                  shadowColor: AppColors.mainBlueColor,
+                  backgroundColor: AppColors.mainRedColor.withOpacity(0.5),
+                  selectedColor: AppColors.mainRedColor,
+                  onSelected: (bool selected) {
+                    setState(
+                      () {
+                        if (selected) {
+                          _selectedIndex = i;
+                          userTypeIDController.text =
+                              controller.activityInList[i].id.toString();
+                        }
+                      },
+                    );
+                  },
+                )
+              : const CustomLoader();
+        }),
+      );
+      chips.add(
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5),
+          child: choiceChip,
+        ),
+      );
+    }
+
+    return ListView(
+      scrollDirection: Axis.horizontal,
+      children: chips,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _activityInDialog(1);
+        },
+        child: const Icon(Icons.add),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [

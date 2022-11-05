@@ -20,6 +20,8 @@ class AppConstant {
   static const String HOME_URL = "/homepage";
   static const String ACTIVITES_URL = "/activities";
   static const String TOP_FIVE_URL = "/topfive";
+  static const String ACTIVITY_IN_URL = "/activityin";
+  static const String ACTIVITY_TYPE_URL = "/activitytype";
 
   // User end points
   static const String USER_URL = "/users";
