@@ -66,4 +66,30 @@ class HomeController extends GetxController implements GetxService {
     update();
     return responseModel;
   }
+
+  Future<ResponseModel> addPost({
+    required String activityInId,
+    required String activityTypeId,
+    required String details,
+    required String activityDate,
+  }) async {
+    _isLoaded = false;
+    update();
+    final response = await homeRepo.addPost(
+        activityDate: activityDate,
+        activityInId: activityInId,
+        activityTypeId: activityTypeId,
+        details: details);
+    late ResponseModel responseModel;
+    if (response.statusCode == 200) {
+      _activityTypeList = [];
+      _activityTypeList.addAll(ActivityTypeModel.fromJson(response.body).data!);
+      responseModel = ResponseModel(true, response.body);
+    } else {
+      responseModel = ResponseModel(false, response.statusText!);
+    }
+    _isLoaded = true;
+    update();
+    return responseModel;
+  }
 }

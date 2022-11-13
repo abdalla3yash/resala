@@ -29,9 +29,13 @@ class HomeRepo {
     });
   }
 
-  Future<Response> addPost(String activityInId, String activityTypeId,
-      String details, String activityDate) async {
-    return await _connect.post(AppConstant.ACTIVITY_TYPE_URL, {
+  Future<Response> addPost({
+    required String activityInId,
+    required String activityTypeId,
+    required String details,
+    required String activityDate,
+  }) async {
+    return await _connect.post(AppConstant.ADD_POST, {
       "activity_in_id": activityInId,
       "activity_type_id": activityTypeId,
       "details": details,

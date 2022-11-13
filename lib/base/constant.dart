@@ -23,6 +23,7 @@ class AppConstant {
   static const String ACTIVITY_IN_URL = "/activityin";
   static const String ACTIVITY_TYPE_URL =
       "https://maghrabi.sha1.tech/api/activitytype";
+  static const String ADD_POST = "https://maghrabi.sha1.tech/api/activities";
 
   // User end points
   static const String USER_URL = "/users";
