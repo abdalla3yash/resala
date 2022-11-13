@@ -42,6 +42,7 @@ dependencies:
   intl: ^0.17.0
   carousel_slider: ^4.1.1
   cached_network_image: ^3.2.2
+  chip_list: ^2.3.3+8
 
 dev_dependencies:
   flutter_test:

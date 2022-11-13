@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class HomeRepo {
   final ApiClient apiClient;
   SharedPreferences sharedPreferences;
+  final _connect = GetConnect();
 
   HomeRepo({required this.apiClient, required this.sharedPreferences});
   Future<Response> getHomeData() async {
@@ -20,9 +21,21 @@ class HomeRepo {
     });
   }
 
-  Future<Response> ActivityType(String activityIn) async {
-    return await apiClient.postData(AppConstant.ACTIVITY_TYPE_URL, {
-      "activity_in_id": activityIn,
+  Future<Response> activityType(String activityInId) async {
+    return await _connect.post(AppConstant.ACTIVITY_TYPE_URL, {
+      "activity_in_id": activityInId,
+    }, headers: {
+      'Authorization': '${sharedPreferences.getString(AppConstant.TOKEN)}',
+    });
+  }
+
+  Future<Response> addPost(String activityInId, String activityTypeId,
+      String details, String activityDate) async {
+    return await _connect.post(AppConstant.ACTIVITY_TYPE_URL, {
+      "activity_in_id": activityInId,
+      "activity_type_id": activityTypeId,
+      "details": details,
+      "activity_date": activityDate,
     }, headers: {
       'Authorization': '${sharedPreferences.getString(AppConstant.TOKEN)}',
     });

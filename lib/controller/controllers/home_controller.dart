@@ -1,10 +1,17 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:resala/base/constant.dart';
 import 'package:resala/controller/repo/home_repo.dart';
 import 'package:resala/model/models/activity_in_model.dart';
+import 'package:resala/model/models/activity_type_model.dart';
 import 'package:resala/model/models/home_model.dart';
+import 'package:resala/model/models/res_model.dart';
 import 'package:resala/model/models/response_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeController extends GetxController implements GetxService {
+  final _connect = GetConnect();
+
   final HomeRepo homeRepo;
   HomeController({required this.homeRepo});
 
@@ -19,6 +26,9 @@ class HomeController extends GetxController implements GetxService {
 
   List<dynamic> _activityInList = [];
   List<dynamic> get activityInList => _activityInList;
+
+  List<dynamic> _activityTypeList = [];
+  List<dynamic> get ActivityTypeList => _activityTypeList;
 
   Future<void> getHomeImages() async {
     Response response = await homeRepo.getHomeData();
@@ -40,19 +50,20 @@ class HomeController extends GetxController implements GetxService {
     } else {}
   }
 
-  // Future<ResponseModel> ActivityType(String activityIn) async {
-  //   _isLoaded = false;
-  //   update();
-  //   Response response = await homeRepo.ActivityType(activityIn);
-  //   late ResponseModel responseModel;
-  //   if (response.statusCode == 200) {
-  //     print("responseeeeeeeee ${response.body}");
-  //     responseModel = ResponseModel(true, response.body);
-  //   } else {
-  //     responseModel = ResponseModel(false, response.statusText!);
-  //   }
-  //   _isLoaded = true;
-  //   update();
-  //   return responseModel;
-  // }
+  Future<ResModel> activityType(String activityInId) async {
+    _isLoaded = false;
+    update();
+    final response = await homeRepo.activityType(activityInId);
+    late ResModel responseModel;
+    if (response.statusCode == 200) {
+      _activityTypeList = [];
+      _activityTypeList.addAll(ActivityTypeModel.fromJson(response.body).data!);
+      responseModel = ResModel(true, response.body);
+    } else {
+      responseModel = ResModel(false, response.body);
+    }
+    _isLoaded = true;
+    update();
+    return responseModel;
+  }
 }
