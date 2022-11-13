@@ -4,6 +4,7 @@ import 'package:resala/base/constant.dart';
 import 'package:resala/controller/repo/home_repo.dart';
 import 'package:resala/model/models/activity_in_model.dart';
 import 'package:resala/model/models/activity_type_model.dart';
+import 'package:resala/model/models/add_post_model.dart';
 import 'package:resala/model/models/home_model.dart';
 import 'package:resala/model/models/res_model.dart';
 import 'package:resala/model/models/response_model.dart';
@@ -67,7 +68,7 @@ class HomeController extends GetxController implements GetxService {
     return responseModel;
   }
 
-  Future<ResponseModel> addPost({
+  Future<ResModel> addPost({
     required String activityInId,
     required String activityTypeId,
     required String details,
@@ -76,17 +77,14 @@ class HomeController extends GetxController implements GetxService {
     _isLoaded = false;
     update();
     final response = await homeRepo.addPost(
-        activityDate: activityDate,
-        activityInId: activityInId,
-        activityTypeId: activityTypeId,
-        details: details);
-    late ResponseModel responseModel;
+      activityDate: activityDate,
+      activityInId: activityInId,
+      activityTypeId: activityTypeId,
+      details: details,
+    );
+    late ResModel responseModel;
     if (response.statusCode == 200) {
-      _activityTypeList = [];
-      _activityTypeList.addAll(ActivityTypeModel.fromJson(response.body).data!);
-      responseModel = ResponseModel(true, response.body);
-    } else {
-      responseModel = ResponseModel(false, response.statusText!);
+      responseModel = ResModel(true, response.body);
     }
     _isLoaded = true;
     update();

@@ -34,12 +34,24 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
       floatingActionButton: const AddPost(),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            sliderHomePage(),
-            _getAllActivities(),
-          ],
+      body: RefreshIndicator(
+        onRefresh: () {
+          return Future.delayed(
+            const Duration(seconds: 1),
+            () {
+              setState(() {
+                Get.find<ActivityController>().getAllActivity();
+              });
+            },
+          );
+        },
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              sliderHomePage(),
+              _getAllActivities(),
+            ],
+          ),
         ),
       ),
     );
@@ -175,7 +187,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               )
-            : const CustomLoader();
+            : const Align(alignment: Alignment.center, child: CustomLoader());
       }),
     );
   }
@@ -184,6 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return GetBuilder<ActivityController>(builder: (activityController) {
       return activityController.isLoaded
           ? ListView.builder(
+              reverse: true,
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: activityController.activityModelList.length,
@@ -205,7 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 .activityModelList[index].activityTypeName!),
                       );
               })
-          : const CustomLoader();
+          : const Align(alignment: Alignment.center, child: CustomLoader());
     });
   }
 }

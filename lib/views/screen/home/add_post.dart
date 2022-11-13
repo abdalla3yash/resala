@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:resala/base/constant.dart';
-import 'package:resala/views/screen/home/activity_type.dart';
+import 'package:resala/views/widget/app_text_field.dart';
 import 'package:resala/views/widget/colors.dart';
 import 'package:resala/views/widget/custom_loader.dart';
 import 'package:resala/views/widget/custom_snackbar.dart';
-
 import '../../../controller/controllers/home_controller.dart';
 
 class AddPost extends StatefulWidget {
@@ -17,15 +15,40 @@ class AddPost extends StatefulWidget {
 
 class _AddPostState extends State<AddPost> {
   int? _selectedIndex;
-  TextEditingController userTypeIDController = TextEditingController();
+  TextEditingController activityInIdController = TextEditingController();
   TextEditingController activityTypeController = TextEditingController();
+  TextEditingController detailsController = TextEditingController();
+
+  void addPost(HomeController homeController) {
+    String userTypeId = activityInIdController.text.trim();
+    String details = detailsController.text.trim();
+    String activityType = activityTypeController.text.trim();
+    homeController
+        .addPost(
+            activityDate: DateTime.now().toString(),
+            activityInId: userTypeId,
+            activityTypeId: activityType,
+            details: details)
+        .then((status) {
+      if (details.isEmpty) {
+        showCustomSnackBar("يرجي تسجيل المشاركه",
+            title: " جمعيه رساله للاعمال الخيريه");
+      } else if (status.isSuccess) {
+        Navigator.pop(context);
+        showCustomSnackBar("تم تسجيل مشاركتك بنجاح",
+            title: " جمعيه رساله للاعمال الخيريه",
+            color: AppColors.mainBlueColor);
+      }
+    });
+  }
 
   void userTypePost(HomeController homeController) {
-    String userTypeId = userTypeIDController.text.trim();
+    String userTypeId = activityInIdController.text.trim();
 
-    homeController.activityType(userTypeId).then((status) {
-      if (status.isSuccess) {
-        showModalBottomSheet(
+    homeController.activityType(userTypeId).then(
+      (status) {
+        if (status.isSuccess) {
+          showModalBottomSheet(
             context: context,
             isDismissible: true,
             enableDrag: true,
@@ -103,7 +126,87 @@ class _AddPostState extends State<AddPost> {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                      showModalBottomSheet(
+                                          context: context,
+                                          isScrollControlled: true,
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(25),
+                                              topRight: Radius.circular(25),
+                                            ),
+                                          ),
+                                          builder: (builder) {
+                                            return GetBuilder<HomeController>(
+                                              builder: ((controller) {
+                                                return controller.isLoaded
+                                                    ? Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                          bottom: MediaQuery.of(
+                                                            context,
+                                                          ).viewInsets.bottom,
+                                                        ),
+                                                        child: SizedBox(
+                                                            width: Get
+                                                                .context!.width,
+                                                            height: Get.context!
+                                                                    .height *
+                                                                0.25,
+                                                            child: Stack(
+                                                                children: [
+                                                                  SizedBox(
+                                                                    width: Get
+                                                                        .context!
+                                                                        .width,
+                                                                    child:
+                                                                        Center(
+                                                                      child:
+                                                                          AppTextField(
+                                                                        textController:
+                                                                            detailsController,
+                                                                        hintText:
+                                                                            "سجل مشاركتك",
+                                                                        icon: Icons
+                                                                            .app_registration_rounded,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  Positioned(
+                                                                    bottom: 10,
+                                                                    child: Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceEvenly,
+                                                                      children: [
+                                                                        TextButton(
+                                                                          onPressed:
+                                                                              () {
+                                                                            addPost(controller);
+                                                                          },
+                                                                          child:
+                                                                              const Text('تسجيل'),
+                                                                        ),
+                                                                        TextButton(
+                                                                          onPressed: () =>
+                                                                              Navigator.pop(context),
+                                                                          child:
+                                                                              const Text('الغاء'),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ])),
+                                                      )
+                                                    : const Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: CustomLoader());
+                                              }),
+                                            );
+                                          });
+                                    },
                                     child: const Text('التالى'),
                                   ),
                                   TextButton(
@@ -118,9 +221,11 @@ class _AddPostState extends State<AddPost> {
                           alignment: Alignment.center, child: CustomLoader());
                 }),
               );
-            });
-      }
-    });
+            },
+          );
+        }
+      },
+    );
   }
 
   @override
@@ -198,7 +303,8 @@ class _AddPostState extends State<AddPost> {
                                                 () {
                                                   if (selected) {
                                                     _selectedIndex = i;
-                                                    userTypeIDController.text =
+                                                    activityInIdController
+                                                            .text =
                                                         controller
                                                             .activityInList[i]
                                                             .id
