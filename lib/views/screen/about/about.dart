@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:resala/views/widget/colors.dart';
+import 'package:resala/views/widget/footer.dart';
 
 class AbouUs extends StatelessWidget {
   const AbouUs({super.key});
@@ -82,7 +83,11 @@ class AbouUs extends StatelessWidget {
                       ),
                       const SizedBox(
                         height: 10,
-                      )
+                      ),
+                      const Footer(),
+                      const SizedBox(
+                        height: 10,
+                      ),
                     ],
                   ),
                 ),
