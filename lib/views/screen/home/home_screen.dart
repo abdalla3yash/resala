@@ -183,9 +183,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ).toList(),
                   ),
-                  SizedBox(
-                    height: Get.context!.height * 0.02,
-                  ),
                 ],
               )
             : SizedBox(
@@ -205,7 +202,29 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (activityController) {
           return activityController.isLoaded
               ? activityController.activityModelList.isEmpty
-                  ? const Center(child: Text("there is no data"))
+                  ? Padding(
+                      padding: EdgeInsets.only(top: Get.context!.height * 0.1),
+                      child: Column(
+                        children: [
+                          Container(
+                            width: Get.context!.height * 0.2,
+                            height: Get.context!.height * 0.2,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage("assets/img/data.png"),
+                                  fit: BoxFit.cover),
+                            ),
+                          ),
+                          const Text(
+                            "لم تقم بتسجيل مشاركه!",
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: AppColors.hintTextColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
                   : ListView.builder(
                       reverse: true,
                       physics: const NeverScrollableScrollPhysics(),
