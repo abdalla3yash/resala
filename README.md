@@ -2,7 +2,7 @@
 
 Application of Resala ORG ,Resala.org Developed using Flutter
 
-<img src="./assets/screenshots/cover.png"> 
+   <img src="./assets/screenshots/cover.png"> 
 
 <div align="center">
 
@@ -18,8 +18,8 @@ Application of Resala ORG ,Resala.org Developed using Flutter
 
 ## 💻 Installation steps
 
-- Updated to `Flutter 3.0.5` Now!
-- Dart SDK `2.15` with Sound Null Safety!
+- Updated to `Flutter 3.3.8` Now!
+- Dart SDK `2.18.4` with Sound Null Safety!
 
 Open CMD where you want to clone the project & run the following commands
 
@@ -32,7 +32,7 @@ flutter run
 
 ## 📱 Screen Shots
 
-<img src="./assets/screenshots/1.png" width=180> <img src="./assets/screenshots/2.png" width=180> <img src="./assets/screenshots/3.png" width=180> <img src="./assets/screenshots/4.png" width=180><img src="./assets/screenshots/5.png" width=180><img src="./assets/screenshots/6.png" width=180><img src="./assets/screenshots/7.png" width=180><img src="./assets/screenshots/8.png" width=180><img src="./assets/screenshots/9.png" width=180><img src="./assets/screenshots/10.png" width=180>
+<img src="./assets/screenshots/1.png" width=180> <img src="./assets/screenshots/2.png" width=180> <img src="./assets/screenshots/3.png" width=180> <img src="./assets/screenshots/4.png" width=180> <img src="./assets/screenshots/5.png" width=180> <img src="./assets/screenshots/6.png" width=180> <img src="./assets/screenshots/7.png" width=180> <img src="./assets/screenshots/8.png" width=180> <img src="./assets/screenshots/9.png" width=180> <img src="./assets/screenshots/10.png" width=180>
 
 
 ## 🔗 API Information
