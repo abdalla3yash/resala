@@ -35,8 +35,8 @@ Future<void> init() async {
       () => ActivityRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
   Get.lazyPut(
       () => TopRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
-  Get.lazyPut(
-      () => ImageRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
+  // Get.lazyPut(
+  //     () => ImageRepo(apiClient: Get.find(), sharedPreferences: Get.find()));
 
   // controllers
   Get.lazyPut(() => AuthController(authRepo: Get.find()));
@@ -44,5 +44,5 @@ Future<void> init() async {
   Get.lazyPut(() => UserController(userRepo: Get.find()));
   Get.lazyPut(() => ActivityController(activityRepo: Get.find()));
   Get.lazyPut(() => TopController(topRepo: Get.find()));
-  Get.lazyPut(() => ImageController(imageRepo: Get.find()));
+  // Get.lazyPut(() => ImageController(imageRepo: Get.find()));
 }

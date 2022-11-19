@@ -51,11 +51,11 @@ class AbouUs extends StatelessWidget {
                           children: [
                             const Text(
                               "جمعيه رساله ",
-                              style: TextStyle(fontSize: 24),
+                              style: TextStyle(fontSize: 20),
                             ),
                             SizedBox(
-                              height: Get.context!.height * 0.08,
-                              width: Get.context!.height * 0.08,
+                              height: Get.context!.height * 0.06,
+                              width: Get.context!.height * 0.06,
                               child: const Center(
                                 child: Image(
                                   image: AssetImage('assets/img/icon.png'),
@@ -79,7 +79,7 @@ class AbouUs extends StatelessWidget {
                         "الان اصبح لرسالة اكثر من 60 فرعا منتشرة في انحاء مصر و يتطوع بها كل عام اكثر من 200 الف متطوع يخدمون ملايين المصريين في حوالي 30 نشاط تطوعي تشمل رعاية الايتام و خدمة المسنين و ايواء اطفال الشوارع و خدمة المكفوفين و الصم و ذوي الاحتياجات الخاصة و دروس التقوية المجانية و محو الامية و معارض الملابس المستعملة و التبرع بالدم و تعليم الكمبيوتر و اللغات و التنمية البشرية و القرآن الكريم و مساعدات للمحتاجين  و قوافل الخير للقرى الفقيرة و القوافل الطبية و علاج الادمان و اطعام المساكين و عمل مشاريع انتاجية للفقراء و اعمار المساجد و المدارس و تحقيق الاماني لاطفال السرطان و التوعية الاخلاقية للشباب و تنظيف الشوارع و الحدائق و نشر السرور بين الناس  و الرفق بالحيوان.",
                         textAlign: TextAlign.justify,
                         style: TextStyle(
-                            color: AppColors.hintTextColor, fontSize: 14),
+                            color: AppColors.hintTextColor, fontSize: 12),
                       ),
                       const SizedBox(
                         height: 10,

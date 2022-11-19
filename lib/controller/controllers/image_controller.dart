@@ -1,44 +1,43 @@
-import 'dart:io';
+// import 'dart:io';
 
-import 'package:flutter/services.dart';
-import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:resala/controller/repo/image_repo.dart';
-import 'package:resala/model/models/response_model.dart';
+// import 'package:flutter/cupertino.dart';
+// import 'package:get/get.dart';
+// import 'package:image_picker/image_picker.dart';
+// import 'package:resala/controller/repo/image_repo.dart';
 
-class ImageController extends GetxController {
-  final ImageRepo imageRepo;
-  ImageController({required this.imageRepo});
+// class ProfileController extends GetxController {
+//   final ImageRepo imageRepo;
+//   ProfileController({required this.imageRepo});
 
-  static ImageController get to => Get.find<ImageController>();
+//   var isLoading = false.obs;
+//   var imageURL = '';
 
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
+//   void uploadImage(ImageSource imageSource) async {
+//     try {
+//       final pickedFile = await ImagePicker().getImage(source: imageSource);
+//       isLoading(true);
+//       if (pickedFile != null) {
+//         var response =
+//             await imageRepo.updateProfile(image: File(pickedFile.path));
 
-  File? image;
-  String? imagePath;
-  final _picker = ImagePicker();
+//         if (response.statusCode == 200) {
+//           //get image url from api response
+//           imageURL = response.body['data']["image"];
 
-  Future updateImage({
-    required File image,
-    String? mobile,
-    String? password,
-    String? userName,
-  }) async {
-    _isLoading = true;
-    update();
-    final response = await imageRepo.updateProfile(
-        image: image, mobile: mobile, password: password, username: userName);
-    late ResponseModel responseModel;
-
-    try {
-      responseModel = ResponseModel(true, response.body);
-    } on PlatformException catch (e) {
-      print('Failed to pick image: $e');
-      responseModel = ResponseModel(false, response.statusText!);
-    }
-    _isLoading = false;
-    update();
-    return responseModel;
-  }
-}
+//           Get.snackbar('Success', 'Image uploaded successfully',
+//               margin: EdgeInsets.only(top: 5, left: 10, right: 10));
+//         } else if (response.statusCode == 401) {
+//           Get.offAllNamed('/sign_up');
+//         } else {
+//           Get.snackbar('Failed', 'Error Code: ${response.statusCode}',
+//               margin: EdgeInsets.only(top: 5, left: 10, right: 10));
+//         }
+//       } else {
+//         Get.snackbar('Failed', 'Image not selected',
+//             margin: EdgeInsets.only(top: 5, left: 10, right: 10));
+//       }
+//     } finally {
+//       isLoading(false);
+//     }
+//   }
+// }
