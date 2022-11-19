@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:resala/controller/controllers/activity_controller.dart';
 import 'package:resala/controller/controllers/home_controller.dart';
+import 'package:resala/views/screen/about/about.dart';
 import 'package:resala/views/screen/home/add_post.dart';
 import 'package:resala/views/widget/colors.dart';
 import 'package:resala/views/widget/custom_loader.dart';
@@ -79,16 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontSize: Get.context!.width * 0.07,
                               fontFamily: "arslan"),
                         ),
-                        SizedBox(
-                          height: Get.context!.height * 0.05,
-                          width: Get.context!.height * 0.05,
-                          child: const Center(
-                            child: Image(
-                              image: AssetImage('assets/img/icon.png'),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
+                        AbouUs(),
                       ],
                     ),
                   ),
