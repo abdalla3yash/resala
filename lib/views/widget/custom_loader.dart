@@ -1,27 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:resala/views/widget/colors.dart';
 
-class CustomLoader extends StatelessWidget {
-  const CustomLoader({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        width: Get.context!.height * 0.1,
-        height: Get.context!.height * 0.1,
-        decoration: BoxDecoration(
-          color: AppColors.mainBlueColor,
-          borderRadius: BorderRadius.circular(50),
-        ),
-        child: const Center(
-          child: CircularProgressIndicator(
-            color: AppColors.whiteColor,
-            strokeWidth: 2.0,
-          ),
-        ),
+final spinkit = SpinKitFadingCircle(
+  itemBuilder: (BuildContext context, int index) {
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: index.isEven ? AppColors.mainRedColor : AppColors.mainBlueColor,
       ),
     );
-  }
-}
+  },
+);

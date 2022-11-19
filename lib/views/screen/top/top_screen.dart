@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:resala/base/constant.dart';
 import 'package:resala/controller/controllers/top_controller.dart';
@@ -152,7 +153,12 @@ class _TopScreenState extends State<TopScreen> {
                         ),
                       );
               })
-          : const CustomLoader();
+          : SizedBox(
+              width: Get.context!.width,
+              height: Get.context!.height * .7,
+              child: Center(
+                child: spinkit,
+              ));
     });
   }
 }

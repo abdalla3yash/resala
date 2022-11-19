@@ -187,7 +187,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               )
-            : const Align(alignment: Alignment.center, child: CustomLoader());
+            : SizedBox(
+                width: Get.context!.width,
+                height: Get.context!.height * 0.5,
+                child: Center(
+                  child: spinkit,
+                ),
+              );
       }),
     );
   }
@@ -218,7 +224,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 .activityModelList[index].activityTypeName!),
                       );
               })
-          : const Align(alignment: Alignment.center, child: CustomLoader());
+          : SizedBox(
+              width: Get.context!.width,
+              height: Get.context!.height * .3,
+              child: Center(
+                child: spinkit,
+              ));
     });
   }
 }

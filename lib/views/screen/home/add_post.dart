@@ -14,7 +14,7 @@ class AddPost extends StatefulWidget {
 }
 
 class _AddPostState extends State<AddPost> {
-  int? _selectedIndex;
+  int? _selectedIndex1, _selectedIndex2;
   TextEditingController activityInIdController = TextEditingController();
   TextEditingController activityTypeController = TextEditingController();
   TextEditingController detailsController = TextEditingController();
@@ -64,9 +64,9 @@ class _AddPostState extends State<AddPost> {
                   return controller.isLoaded
                       ? SizedBox(
                           width: Get.context!.width,
-                          height: controller.ActivityTypeList.length > 4
-                              ? Get.context!.height * 0.4
-                              : Get.context!.height * 0.2,
+                          height: controller.ActivityTypeList.length > 6
+                              ? Get.context!.height * 0.35
+                              : Get.context!.height * 0.25,
                           child: Stack(children: [
                             SizedBox(
                               height: Get.context!.height * 0.05,
@@ -83,6 +83,7 @@ class _AddPostState extends State<AddPost> {
                                         vertical: Get.context!.height * 0.01,
                                       ),
                                       child: ChoiceChip(
+                                        selected: _selectedIndex1 == i,
                                         label: Text(
                                           controller.ActivityTypeList[i]!.name!,
                                           style: const TextStyle(
@@ -96,14 +97,11 @@ class _AddPostState extends State<AddPost> {
                                         backgroundColor: AppColors.mainRedColor
                                             .withOpacity(0.5),
                                         selectedColor: AppColors.mainRedColor,
-                                        selected: controller
-                                                .ActivityTypeList[i]!.id ==
-                                            i,
                                         onSelected: (bool selected) {
                                           setState(
                                             () {
                                               if (selected) {
-                                                _selectedIndex = i;
+                                                _selectedIndex1 = i;
                                                 activityTypeController.text =
                                                     controller
                                                         .ActivityTypeList[i].id
@@ -199,10 +197,15 @@ class _AddPostState extends State<AddPost> {
                                                                   ),
                                                                 ])),
                                                       )
-                                                    : const Align(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: CustomLoader());
+                                                    : SizedBox(
+                                                        width:
+                                                            Get.context!.width,
+                                                        height: Get.context!
+                                                                .height *
+                                                            .7,
+                                                        child: Center(
+                                                          child: spinkit,
+                                                        ));
                                               }),
                                             );
                                           });
@@ -217,8 +220,12 @@ class _AddPostState extends State<AddPost> {
                               ),
                             ),
                           ]))
-                      : const Align(
-                          alignment: Alignment.center, child: CustomLoader());
+                      : SizedBox(
+                          width: Get.context!.width,
+                          height: Get.context!.height * .7,
+                          child: Center(
+                            child: spinkit,
+                          ));
                 }),
               );
             },
@@ -255,97 +262,101 @@ class _AddPostState extends State<AddPost> {
                   return GetBuilder<HomeController>(
                     builder: ((controller) {
                       return controller.isLoaded
-                          ? SizedBox(
-                              width: Get.context!.width,
-                              height: controller.activityInList.length < 4
-                                  ? Get.context!.height * 0.2
-                                  : Get.context!.height * 0.3,
-                              child: Stack(children: [
-                                SizedBox(
-                                  height: Get.context!.height * 0.05,
-                                ),
-                                SizedBox(
-                                  width: Get.context!.width * 0.9,
-                                  child: Wrap(
-                                    children: List<Widget>.generate(
-                                      controller.activityInList.length,
-                                      (int i) {
-                                        return Padding(
-                                          padding: EdgeInsets.symmetric(
-                                            horizontal:
-                                                Get.context!.width * 0.05,
-                                            vertical:
-                                                Get.context!.height * 0.03,
-                                          ),
-                                          child: ChoiceChip(
-                                            label: Text(
-                                              controller
-                                                  .activityInList[i]!.name!,
-                                              style: const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 14,
-                                              ),
+                          ? StatefulBuilder(builder: (context, setState) {
+                              return SizedBox(
+                                width: Get.context!.width,
+                                height: controller.activityInList.length < 4
+                                    ? Get.context!.height * 0.2
+                                    : Get.context!.height * 0.3,
+                                child: Stack(children: [
+                                  SizedBox(
+                                    height: Get.context!.height * 0.05,
+                                  ),
+                                  SizedBox(
+                                    width: Get.context!.width,
+                                    child: Wrap(
+                                      children: List<Widget>.generate(
+                                        controller.activityInList.length,
+                                        (int x) {
+                                          return Padding(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal:
+                                                  Get.context!.width * 0.03,
+                                              vertical:
+                                                  Get.context!.height * 0.03,
                                             ),
-                                            elevation: 5,
-                                            pressElevation: 5,
-                                            shadowColor:
-                                                AppColors.mainBlueColor,
-                                            backgroundColor: AppColors
-                                                .mainRedColor
-                                                .withOpacity(0.5),
-                                            selectedColor:
-                                                AppColors.mainRedColor,
-                                            selected: controller
-                                                    .activityInList[i]!.id ==
-                                                i,
-                                            onSelected: (bool selected) {
-                                              setState(
-                                                () {
-                                                  if (selected) {
-                                                    _selectedIndex = i;
-                                                    activityInIdController
-                                                            .text =
-                                                        controller
-                                                            .activityInList[i]
-                                                            .id
-                                                            .toString();
-                                                  }
-                                                },
-                                              );
-                                            },
-                                          ),
-                                        );
-                                      },
-                                    ).toList(),
-                                  ),
-                                ),
-                                SizedBox(height: Get.context!.height * 0.02),
-                                Positioned(
-                                  bottom: 10,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                          userTypePost(controller);
+                                            child: ChoiceChip(
+                                              selected: _selectedIndex2 == x,
+                                              label: Text(
+                                                controller
+                                                    .activityInList[x]!.name!,
+                                                style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                              elevation: 5,
+                                              pressElevation: 5,
+                                              shadowColor:
+                                                  AppColors.mainBlueColor,
+                                              backgroundColor: AppColors
+                                                  .mainRedColor
+                                                  .withOpacity(0.5),
+                                              selectedColor:
+                                                  AppColors.mainRedColor,
+                                              onSelected: (bool selected) {
+                                                setState(
+                                                  () {
+                                                    if (selected) {
+                                                      _selectedIndex2 = x;
+                                                      activityInIdController
+                                                              .text =
+                                                          controller
+                                                              .activityInList[x]
+                                                              .id
+                                                              .toString();
+                                                    }
+                                                  },
+                                                );
+                                              },
+                                            ),
+                                          );
                                         },
-                                        child: const Text('التالي'),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: const Text('الغاء'),
-                                      ),
-                                    ],
+                                      ).toList(),
+                                    ),
                                   ),
-                                ),
-                              ]))
-                          : Align(
-                              alignment: Alignment.center,
-                              child: const CustomLoader());
+                                  SizedBox(height: Get.context!.height * 0.02),
+                                  Positioned(
+                                    bottom: 10,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                            userTypePost(controller);
+                                          },
+                                          child: const Text('التالي'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Text('الغاء'),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ]),
+                              );
+                            })
+                          : SizedBox(
+                              width: Get.context!.width,
+                              height: Get.context!.height * .7,
+                              child: Center(
+                                child: spinkit,
+                              ));
                     }),
                   );
                 });

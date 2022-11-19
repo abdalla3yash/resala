@@ -118,7 +118,12 @@ class LoginScreen extends StatelessWidget {
                     ],
                   ),
                 )
-              : const CustomLoader();
+              : SizedBox(
+                  width: Get.context!.width,
+                  height: Get.context!.height * .7,
+                  child: Center(
+                    child: spinkit,
+                  ));
         }),
       ),
     );

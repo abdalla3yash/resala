@@ -27,4 +27,5 @@ class AppConstant {
 
   // User end points
   static const String USER_URL = "/users";
+  static const String USER_POST_URL = "https://maghrabi.sha1.tech/api/users";
 }

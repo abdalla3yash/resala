@@ -283,7 +283,12 @@ class _RegisterScreenState extends State<RegisterScreen>
                     ],
                   ),
                 )
-              : const CustomLoader();
+              : SizedBox(
+                  width: Get.context!.width,
+                  height: Get.context!.height * .7,
+                  child: Center(
+                    child: spinkit,
+                  ));
         }),
       ),
     );
@@ -319,7 +324,12 @@ class _RegisterScreenState extends State<RegisterScreen>
                     );
                   },
                 )
-              : const CustomLoader();
+              : SizedBox(
+                  width: Get.context!.width,
+                  height: Get.context!.height * .7,
+                  child: Center(
+                    child: spinkit,
+                  ));
         }),
       );
       chips.add(
