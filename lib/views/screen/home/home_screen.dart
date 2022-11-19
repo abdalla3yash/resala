@@ -34,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: AppColors.whiteColor,
       floatingActionButton: const AddPost(),
+      resizeToAvoidBottomInset: true,
       body: RefreshIndicator(
         onRefresh: () {
           return Future.delayed(
@@ -199,37 +200,39 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _getAllActivities() {
-    return GetBuilder<ActivityController>(builder: (activityController) {
-      return activityController.isLoaded
-          ? ListView.builder(
-              reverse: true,
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: activityController.activityModelList.length,
-              itemBuilder: (context, index) {
-                return activityController.activityModelList.isEmpty
-                    ? const Center(child: Text("there is no data"))
-                    : Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: BodyPost(
-                            userName: activityController
-                                .activityModelList[index].userName!,
-                            details: activityController
-                                .activityModelList[index].details!,
-                            date: activityController
-                                .activityModelList[index].activityDate!,
-                            activityInName: activityController
-                                .activityModelList[index].activityInName!,
-                            activityTypeName: activityController
-                                .activityModelList[index].activityTypeName!),
-                      );
-              })
-          : SizedBox(
-              width: Get.context!.width,
-              height: Get.context!.height * .3,
-              child: Center(
-                child: spinkit,
-              ));
-    });
+    return GetBuilder<ActivityController>(
+        init: ActivityController(activityRepo: Get.find()),
+        builder: (activityController) {
+          return activityController.isLoaded
+              ? activityController.activityModelList.isEmpty
+                  ? const Center(child: Text("there is no data"))
+                  : ListView.builder(
+                      reverse: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: activityController.activityModelList.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: BodyPost(
+                              userName: activityController
+                                  .activityModelList[index].userName!,
+                              details: activityController
+                                  .activityModelList[index].details!,
+                              date: activityController
+                                  .activityModelList[index].activityDate!,
+                              activityInName: activityController
+                                  .activityModelList[index].activityInName!,
+                              activityTypeName: activityController
+                                  .activityModelList[index].activityTypeName!),
+                        );
+                      })
+              : SizedBox(
+                  width: Get.context!.width,
+                  height: Get.context!.height * .3,
+                  child: Center(
+                    child: spinkit,
+                  ));
+        });
   }
 }

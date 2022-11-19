@@ -49,177 +49,186 @@ class _AddPostState extends State<AddPost> {
       (status) {
         if (status.isSuccess) {
           showModalBottomSheet(
+            isScrollControlled: true,
             context: context,
-            isDismissible: true,
-            enableDrag: true,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(25),
                 topRight: Radius.circular(25),
               ),
             ),
-            builder: (builder) {
+            builder: (context) {
               return GetBuilder<HomeController>(
                 builder: ((controller) {
                   return controller.isLoaded
-                      ? SizedBox(
-                          width: Get.context!.width,
-                          height: controller.ActivityTypeList.length > 6
-                              ? Get.context!.height * 0.35
-                              : Get.context!.height * 0.25,
-                          child: Stack(children: [
-                            SizedBox(
-                              height: Get.context!.height * 0.05,
-                            ),
-                            SizedBox(
-                              width: Get.context!.width * 0.9,
-                              child: Wrap(
-                                children: List<Widget>.generate(
-                                  controller.ActivityTypeList.length,
-                                  (int i) {
-                                    return Padding(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: Get.context!.width * 0.01,
-                                        vertical: Get.context!.height * 0.01,
-                                      ),
-                                      child: ChoiceChip(
-                                        selected: _selectedIndex1 == i,
-                                        label: Text(
-                                          controller.ActivityTypeList[i]!.name!,
-                                          style: const TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 14,
+                      ? StatefulBuilder(builder: (context, setState) {
+                          return SizedBox(
+                              width: Get.context!.width,
+                              height: controller.ActivityTypeList.length > 6
+                                  ? Get.context!.height * 0.35
+                                  : Get.context!.height * 0.25,
+                              child: Stack(children: [
+                                SizedBox(
+                                  height: Get.context!.height * 0.05,
+                                ),
+                                SizedBox(
+                                  width: Get.context!.width * 0.9,
+                                  child: Wrap(
+                                    children: List<Widget>.generate(
+                                      controller.ActivityTypeList.length,
+                                      (int i) {
+                                        return Padding(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal:
+                                                Get.context!.width * 0.01,
+                                            vertical:
+                                                Get.context!.height * 0.01,
                                           ),
-                                        ),
-                                        elevation: 5,
-                                        pressElevation: 5,
-                                        shadowColor: AppColors.mainBlueColor,
-                                        backgroundColor: AppColors.mainRedColor
-                                            .withOpacity(0.5),
-                                        selectedColor: AppColors.mainRedColor,
-                                        onSelected: (bool selected) {
-                                          setState(
-                                            () {
-                                              if (selected) {
-                                                _selectedIndex1 = i;
-                                                activityTypeController.text =
-                                                    controller
-                                                        .ActivityTypeList[i].id
-                                                        .toString();
-                                              }
-                                            },
-                                          );
-                                        },
-                                      ),
-                                    );
-                                  },
-                                ).toList(),
-                              ),
-                            ),
-                            SizedBox(height: Get.context!.height * 0.02),
-                            Positioned(
-                              bottom: 10,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                      showModalBottomSheet(
-                                          context: context,
-                                          isScrollControlled: true,
-                                          shape: const RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(25),
-                                              topRight: Radius.circular(25),
+                                          child: ChoiceChip(
+                                            selected: _selectedIndex1 == i,
+                                            label: Text(
+                                              controller
+                                                  .ActivityTypeList[i]!.name!,
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14,
+                                              ),
                                             ),
+                                            elevation: 5,
+                                            pressElevation: 5,
+                                            shadowColor:
+                                                AppColors.mainBlueColor,
+                                            backgroundColor: AppColors
+                                                .mainRedColor
+                                                .withOpacity(0.5),
+                                            selectedColor:
+                                                AppColors.mainRedColor,
+                                            onSelected: (bool selected) {
+                                              setState(
+                                                () {
+                                                  if (selected) {
+                                                    _selectedIndex1 = i;
+                                                    activityTypeController
+                                                            .text =
+                                                        controller
+                                                            .ActivityTypeList[i]
+                                                            .id
+                                                            .toString();
+                                                  }
+                                                },
+                                              );
+                                            },
                                           ),
-                                          builder: (builder) {
-                                            return GetBuilder<HomeController>(
-                                              builder: ((controller) {
-                                                return controller.isLoaded
-                                                    ? Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                          bottom: MediaQuery.of(
-                                                            context,
-                                                          ).viewInsets.bottom,
-                                                        ),
-                                                        child: SizedBox(
+                                        );
+                                      },
+                                    ).toList(),
+                                  ),
+                                ),
+                                SizedBox(height: Get.context!.height * 0.02),
+                                Positioned(
+                                  bottom: 10,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                          showModalBottomSheet(
+                                              context: context,
+                                              isScrollControlled: true,
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.only(
+                                                  topLeft: Radius.circular(25),
+                                                  topRight: Radius.circular(25),
+                                                ),
+                                              ),
+                                              builder: (context) {
+                                                return GetBuilder<
+                                                    HomeController>(
+                                                  builder: ((controller) {
+                                                    return controller.isLoaded
+                                                        ? Padding(
+                                                            padding: EdgeInsets.only(
+                                                                bottom: MediaQuery.of(
+                                                                        context)
+                                                                    .viewInsets
+                                                                    .bottom),
+                                                            child: SizedBox(
+                                                                width: Get
+                                                                    .context!
+                                                                    .width,
+                                                                height: Get
+                                                                        .context!
+                                                                        .height *
+                                                                    0.25,
+                                                                child: Stack(
+                                                                    children: [
+                                                                      SizedBox(
+                                                                        width: Get
+                                                                            .context!
+                                                                            .width,
+                                                                        child:
+                                                                            Center(
+                                                                          child:
+                                                                              AppTextField(
+                                                                            textController:
+                                                                                detailsController,
+                                                                            hintText:
+                                                                                "سجل مشاركتك",
+                                                                            icon:
+                                                                                Icons.app_registration_rounded,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      Positioned(
+                                                                        bottom:
+                                                                            10,
+                                                                        child:
+                                                                            Row(
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.spaceEvenly,
+                                                                          children: [
+                                                                            TextButton(
+                                                                              onPressed: () {
+                                                                                addPost(controller);
+                                                                              },
+                                                                              child: const Text('تسجيل'),
+                                                                            ),
+                                                                            TextButton(
+                                                                              onPressed: () => Navigator.pop(context),
+                                                                              child: const Text('الغاء'),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    ])),
+                                                          )
+                                                        : SizedBox(
                                                             width: Get
                                                                 .context!.width,
                                                             height: Get.context!
                                                                     .height *
-                                                                0.25,
-                                                            child: Stack(
-                                                                children: [
-                                                                  SizedBox(
-                                                                    width: Get
-                                                                        .context!
-                                                                        .width,
-                                                                    child:
-                                                                        Center(
-                                                                      child:
-                                                                          AppTextField(
-                                                                        textController:
-                                                                            detailsController,
-                                                                        hintText:
-                                                                            "سجل مشاركتك",
-                                                                        icon: Icons
-                                                                            .app_registration_rounded,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  Positioned(
-                                                                    bottom: 10,
-                                                                    child: Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceEvenly,
-                                                                      children: [
-                                                                        TextButton(
-                                                                          onPressed:
-                                                                              () {
-                                                                            addPost(controller);
-                                                                          },
-                                                                          child:
-                                                                              const Text('تسجيل'),
-                                                                        ),
-                                                                        TextButton(
-                                                                          onPressed: () =>
-                                                                              Navigator.pop(context),
-                                                                          child:
-                                                                              const Text('الغاء'),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                ])),
-                                                      )
-                                                    : SizedBox(
-                                                        width:
-                                                            Get.context!.width,
-                                                        height: Get.context!
-                                                                .height *
-                                                            .7,
-                                                        child: Center(
-                                                          child: spinkit,
-                                                        ));
-                                              }),
-                                            );
-                                          });
-                                    },
-                                    child: const Text('التالى'),
+                                                                .7,
+                                                            child: Center(
+                                                              child: spinkit,
+                                                            ));
+                                                  }),
+                                                );
+                                              });
+                                        },
+                                        child: const Text('التالى'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(context),
+                                        child: const Text('الغاء'),
+                                      ),
+                                    ],
                                   ),
-                                  TextButton(
-                                    onPressed: () => Navigator.pop(context),
-                                    child: const Text('الغاء'),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ]))
+                                ),
+                              ]));
+                        })
                       : SizedBox(
                           width: Get.context!.width,
                           height: Get.context!.height * .7,
@@ -258,7 +267,7 @@ class _AddPostState extends State<AddPost> {
                     topRight: Radius.circular(25),
                   ),
                 ),
-                builder: (builder) {
+                builder: (context) {
                   return GetBuilder<HomeController>(
                     builder: ((controller) {
                       return controller.isLoaded

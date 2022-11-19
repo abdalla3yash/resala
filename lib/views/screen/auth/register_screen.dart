@@ -234,19 +234,20 @@ class _RegisterScreenState extends State<RegisterScreen>
                       SizedBox(
                         height: Get.context!.height * 0.02,
                       ),
-                      const Align(
+                      Align(
                         alignment: Alignment.centerRight,
                         child: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
+                          padding:
+                              EdgeInsets.only(right: Get.context!.width * 0.07),
+                          child: const Text(
                             "يرجي اختيار نوع المسئوليه",
-                            style: TextStyle(fontSize: 14),
+                            style: TextStyle(fontSize: 15),
                           ),
                         ),
                       ),
                       SizedBox(
                         height: 50,
-                        child: _buildChips(),
+                        child: userType(),
                       ),
                       SizedBox(
                         height: Get.context!.height * 0.02,
@@ -294,55 +295,107 @@ class _RegisterScreenState extends State<RegisterScreen>
     );
   }
 
-  Widget _buildChips() {
-    List<Widget> chips = [];
-
-    for (int i = 0; i < 3; i++) {
-      GetBuilder<AuthController> choiceChip = GetBuilder<AuthController>(
-        builder: ((controller) {
-          return !controller.isLoading
-              ? ChoiceChip(
-                  selected: _selectedIndex == i,
-                  label: Text(
-                    controller.userTypeList[i]!.name!,
-                    style: const TextStyle(color: Colors.white, fontSize: 14),
-                  ),
-                  elevation: 10,
-                  pressElevation: 5,
-                  shadowColor: AppColors.mainBlueColor,
-                  backgroundColor: AppColors.mainRedColor.withOpacity(0.5),
-                  selectedColor: AppColors.mainRedColor,
-                  onSelected: (bool selected) {
-                    setState(
-                      () {
-                        if (selected) {
-                          _selectedIndex = i;
-                          userTypeIDController.text =
-                              controller.userTypeList[i].id.toString();
-                        }
-                      },
-                    );
-                  },
-                )
-              : SizedBox(
-                  width: Get.context!.width,
-                  height: Get.context!.height * .7,
-                  child: Center(
-                    child: spinkit,
-                  ));
-        }),
-      );
-      chips.add(
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: choiceChip,
-        ),
-      );
-    }
-
-    return ListView(
-      scrollDirection: Axis.horizontal,
-      children: chips,
+  Widget userType() {
+    return GetBuilder<AuthController>(
+      builder: ((controller) {
+        return !controller.isLoading
+            ? SizedBox(
+                width: Get.context!.width,
+                child: Wrap(
+                  runAlignment: WrapAlignment.center,
+                  children: List<Widget>.generate(
+                    controller.userTypeList.length,
+                    (int i) {
+                      return Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: Get.context!.width * 0.04,
+                        ),
+                        child: ChoiceChip(
+                          selected: _selectedIndex == i,
+                          label: Text(
+                            controller.userTypeList[i]!.name!,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                            ),
+                          ),
+                          elevation: 5,
+                          pressElevation: 5,
+                          shadowColor: AppColors.mainBlueColor,
+                          backgroundColor:
+                              AppColors.mainRedColor.withOpacity(0.5),
+                          selectedColor: AppColors.mainRedColor,
+                          onSelected: (bool selected) {
+                            setState(
+                              () {
+                                if (selected) {
+                                  _selectedIndex = i;
+                                  userTypeIDController.text =
+                                      controller.userTypeList[i].id.toString();
+                                }
+                              },
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  ).toList(),
+                ),
+              )
+            : spinkit;
+      }),
     );
   }
+
+  // Widget _buildChips() {
+  //   List<Widget> chips = [];
+
+  //   for (int i = 0; i < 3; i++) {
+  //     GetBuilder<AuthController> choiceChip = GetBuilder<AuthController>(
+  //       builder: ((controller) {
+  //         return !controller.isLoading
+  //             ? ChoiceChip(
+  //                 selected: _selectedIndex == i,
+  //                 label: Text(
+  //                   controller.userTypeList[i]!.name!,
+  //                   style: const TextStyle(color: Colors.white, fontSize: 14),
+  //                 ),
+  //                 elevation: 10,
+  //                 pressElevation: 5,
+  //                 shadowColor: AppColors.mainBlueColor,
+  //                 backgroundColor: AppColors.mainRedColor.withOpacity(0.5),
+  //                 selectedColor: AppColors.mainRedColor,
+  //                 onSelected: (bool selected) {
+  //                   setState(
+  //                     () {
+  //                       if (selected) {
+  //                         _selectedIndex = i;
+  //                         userTypeIDController.text =
+  //                             controller.userTypeList[i].id.toString();
+  //                       }
+  //                     },
+  //                   );
+  //                 },
+  //               )
+  //             : SizedBox(
+  //                 width: Get.context!.width,
+  //                 height: Get.context!.height * .7,
+  //                 child: Center(
+  //                   child: spinkit,
+  //                 ));
+  //       }),
+  //     );
+  //     chips.add(
+  //       Padding(
+  //         padding: const EdgeInsets.symmetric(horizontal: 10),
+  //         child: choiceChip,
+  //       ),
+  //     );
+  //   }
+
+  //   return ListView(
+  //     scrollDirection: Axis.horizontal,
+  //     children: chips,
+  //   );
+  // }
 }
